@@ -200,7 +200,7 @@ export default function App() {
                 
                 <div className="absolute inset-0 overflow-hidden rounded-2xl bg-neutral-900 border border-white/10 group">
                   <img 
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800" 
+                    src="/profile.png" 
                     alt="Dylan Islom" 
                     className="w-full h-full object-cover grayscale brightness-75 hover:grayscale-0 hover:brightness-100 transition-all duration-700"
                   />
@@ -562,4 +562,3 @@ export default function App() {
     </div>
   );
 }
-
