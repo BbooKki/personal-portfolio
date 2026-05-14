@@ -48,7 +48,9 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
             cd /home/portfolio-vite
-            npm ci
+            if [ ! -d node_modules ]; then
+              npm ci
+            fi
 
             pkill -f "npx serve -s dist -l 3002" || true
             pkill -f "node server.js" || true
