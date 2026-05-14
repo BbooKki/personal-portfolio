@@ -51,21 +51,14 @@ export default function App() {
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted", contactForm);
     setFormStatus("sending");
 
     try {
-      console.log("Sending request to backend...");
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(contactForm),
       });
-
-      console.log("Response status:", response.status);
-      console.log("Response ok:", response.ok);
 
       if (response.ok) {
         setFormStatus("success");
@@ -234,9 +227,9 @@ export default function App() {
                 <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-white/50 z-20" />
                 
                 <div className="absolute inset-0 overflow-hidden rounded-2xl bg-neutral-900 border border-white/10 group">
-                  <img
-                    src="/profile.png"
-                    alt="Dylan Islom"
+                  <img 
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800" 
+                    alt="Dylan Islom" 
                     className="w-full h-full object-cover grayscale brightness-75 hover:grayscale-0 hover:brightness-100 transition-all duration-700"
                   />
                   {/* Decorative Scanlines on image */}
@@ -513,21 +506,20 @@ export default function App() {
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-neutral-400 uppercase tracking-widest font-mono">{t.contact.form.name}</label>
                     <input
-                      type="text"
+                      className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono"
                       value={contactForm.name}
                       onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
                       required
-                      className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono"
                     />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-neutral-400 uppercase tracking-widest font-mono">{t.contact.form.email}</label>
                     <input
                       type="email"
+                      className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono"
                       value={contactForm.email}
                       onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
                       required
-                      className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono"
                     />
                   </div>
                 </div>
@@ -535,10 +527,10 @@ export default function App() {
                   <label className="text-sm font-bold text-neutral-400 uppercase tracking-widest font-mono">{t.contact.form.message}</label>
                   <textarea
                     rows={4}
+                    className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono resize-none"
                     value={contactForm.message}
                     onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
                     required
-                    className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono resize-none"
                   />
                 </div>
                 <Button
@@ -547,7 +539,7 @@ export default function App() {
                   className="w-full py-4 text-lg"
                   disabled={formStatus === "sending"}
                 >
-                  {formStatus === "sending" ? "Sending..." : formStatus === "success" ? "Sent!" : formStatus === "error" ? "Failed. Try again" : t.contact.form.send}
+                  {formStatus === "sending" ? "SENDING..." : t.contact.form.send}
                 </Button>
               </form>
             </Card>
@@ -620,7 +612,7 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Success/Error Popup Notification */}
+      {/* Success/Error Popup */}
       <AnimatePresence>
         {(formStatus === "success" || formStatus === "error") && (
           <motion.div
@@ -629,32 +621,12 @@ export default function App() {
             exit={{ opacity: 0, y: 50 }}
             className="fixed bottom-8 right-8 z-50"
           >
-            <div className={`px-6 py-4 rounded-lg shadow-2xl border ${
+            <div className={`px-6 py-4 rounded-lg shadow-lg font-mono font-bold tracking-widest ${
               formStatus === "success"
-                ? "bg-green-500/90 border-green-400"
-                : "bg-red-500/90 border-red-400"
-            } backdrop-blur-sm`}>
-              <div className="flex items-center gap-3">
-                {formStatus === "success" ? (
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                ) : (
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                )}
-                <div>
-                  <p className="text-white font-bold font-mono text-sm">
-                    {formStatus === "success" ? "MESSAGE SENT!" : "FAILED TO SEND"}
-                  </p>
-                  <p className="text-white/90 text-xs font-mono">
-                    {formStatus === "success"
-                      ? "I'll get back to you soon."
-                      : "Please try again later."}
-                  </p>
-                </div>
-              </div>
+                ? "bg-green-500/90 text-white"
+                : "bg-red-500/90 text-white"
+            }`}>
+              {formStatus === "success" ? "MESSAGE SENT!" : "FAILED TO SEND"}
             </div>
           </motion.div>
         )}

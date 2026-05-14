@@ -49,7 +49,7 @@ export const PROJECTS = [
     stack: ["NestJS", "GraphQL", "MongoDB", "Next.js", "WebSocket"],
     impact: "Built with MVR architecture, delivering <100ms response times for 20k+ SKUs.",
     link: "http://theflowuz.shop",
-    image: "/flowshop.png",
+    image: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&q=80&w=800",
     isCaseStudy: true
   },
   {
@@ -59,7 +59,7 @@ export const PROJECTS = [
     stack: ["Express.js", "MongoDB", "Redux", "Socket.io", "Docker"],
     impact: "Implemented complex financial data modeling and real-time order tracking.",
     link: "http://our-petstore.my.to",
-    image: "/petstore.png",
+    image: "https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?auto=format&fit=crop&q=80&w=800",
     isCaseStudy: true
   }
 ];
