@@ -52,8 +52,8 @@ jobs:
               npm ci
             fi
 
-            pkill -f "[n]px serve -s dist -l 3002" || true
-            pkill -f "[n]ode server.js" || true
+            lsof -ti:3002 | xargs kill -9 2>/dev/null || true
+            lsof -ti:3004 | xargs kill -9 2>/dev/null || true
 
             nohup npx serve -s dist -l 3002 > portfolio-frontend.log 2>&1 &
             nohup node server.js > portfolio-backend.log 2>&1 &
