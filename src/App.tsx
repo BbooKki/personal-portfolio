@@ -14,8 +14,6 @@ export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [lang, setLang] = useState<Language>("en");
-  const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });
-  const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   const t = translations[lang];
 
@@ -47,32 +45,6 @@ export default function App() {
 
   const toggleLang = () => {
     setLang(prev => prev === "en" ? "ko" : "en");
-  };
-
-  const handleContactSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormStatus("sending");
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(contactForm),
-      });
-
-      if (response.ok) {
-        setFormStatus("success");
-        setContactForm({ name: "", email: "", message: "" });
-        setTimeout(() => setFormStatus("idle"), 5000);
-      } else {
-        setFormStatus("error");
-        setTimeout(() => setFormStatus("idle"), 5000);
-      }
-    } catch (error) {
-      console.error("Error sending message:", error);
-      setFormStatus("error");
-      setTimeout(() => setFormStatus("idle"), 5000);
-    }
   };
 
   return (
@@ -501,46 +473,22 @@ export default function App() {
             </div>
 
             <Card className="p-10 border-white/10 bg-white/[0.02]">
-              <form className="space-y-6" onSubmit={handleContactSubmit}>
+              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-neutral-400 uppercase tracking-widest font-mono">{t.contact.form.name}</label>
-                    <input
-                      className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono"
-                      value={contactForm.name}
-                      onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
-                      required
-                    />
+                    <input className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-neutral-400 uppercase tracking-widest font-mono">{t.contact.form.email}</label>
-                    <input
-                      type="email"
-                      className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono"
-                      value={contactForm.email}
-                      onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
-                      required
-                    />
+                    <input className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono" />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-neutral-400 uppercase tracking-widest font-mono">{t.contact.form.message}</label>
-                  <textarea
-                    rows={4}
-                    className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono resize-none"
-                    value={contactForm.message}
-                    onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
-                    required
-                  />
+                  <textarea rows={4} className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono resize-none" />
                 </div>
-                <Button
-                  type="submit"
-                  variant="secondary"
-                  className="w-full py-4 text-lg"
-                  disabled={formStatus === "sending"}
-                >
-                  {formStatus === "sending" ? "SENDING..." : t.contact.form.send}
-                </Button>
+                <Button variant="secondary" className="w-full py-4 text-lg">{t.contact.form.send}</Button>
               </form>
             </Card>
           </div>
@@ -611,26 +559,6 @@ export default function App() {
           </div>
         </div>
       </footer>
-
-      {/* Success/Error Popup */}
-      <AnimatePresence>
-        {(formStatus === "success" || formStatus === "error") && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-8 right-8 z-50"
-          >
-            <div className={`px-6 py-4 rounded-lg shadow-lg font-mono font-bold tracking-widest ${
-              formStatus === "success"
-                ? "bg-green-500/90 text-white"
-                : "bg-red-500/90 text-white"
-            }`}>
-              {formStatus === "success" ? "MESSAGE SENT!" : "FAILED TO SEND"}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
