@@ -58,7 +58,7 @@ export const PROJECTS = [
     description: "Multi-vendor pet marketplace with robust order management and administrative dashboard.",
     stack: ["Express.js", "MongoDB", "Redux", "Socket.io", "Docker"],
     impact: "Implemented complex financial data modeling and real-time order tracking.",
-    link: "http://our-petstore.my.to",
+    link: "http://168.231.123.112:3001",
     image: "/petstore.png",
     isCaseStudy: true
   }
