@@ -609,6 +609,24 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+        {/* Success/Error Popup */}
+        <AnimatePresence>
+          {(formStatus === "success" || formStatus === "error") && (
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+              className="fixed bottom-8 right-8 z-50"
+            >
+              <div className={`px-6 py-4 rounded-lg shadow-lg font-mono font-bold tracking-widest ${
+                formStatus === "success" ? "bg-green-500/90 text-white" : "bg-red-500/90 text-white"
+              }`}>
+                {formStatus === "success" ? "MESSAGE SENT!" : "FAILED TO SEND"}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
     </div>
   );
 }
