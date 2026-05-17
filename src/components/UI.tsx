@@ -57,16 +57,32 @@ export function Button({
   variant = 'primary', 
   className = "", 
   ...props 
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'outline' }) {
+}: (
+  | React.ButtonHTMLAttributes<HTMLButtonElement>
+  | React.AnchorHTMLAttributes<HTMLAnchorElement>
+) & { variant?: 'primary' | 'secondary' | 'outline' }) {
   const variants = {
     primary: "bg-white text-black hover:bg-neutral-200 shadow-[0_0_20px_rgba(255,255,255,0.1)] border border-white/50",
     secondary: "bg-neutral-800 text-white hover:bg-neutral-700 shadow-lg border border-white/5",
     outline: "border border-white/10 text-white hover:bg-white/5 hover:border-white/20"
   };
 
+  const buttonClassName = `px-8 py-3 rounded-sm font-mono text-sm font-bold uppercase tracking-widest transition-all active:scale-95 ${variants[variant]} ${className}`;
+
+  if ("href" in props && typeof props.href === "string") {
+    return (
+      <a
+        className={buttonClassName}
+        {...props}
+      >
+        {children}
+      </a>
+    );
+  }
+
   return (
     <button 
-      className={`px-8 py-3 rounded-sm font-mono text-sm font-bold uppercase tracking-widest transition-all active:scale-95 ${variants[variant]} ${className}`}
+      className={buttonClassName}
       {...props}
     >
       {children}

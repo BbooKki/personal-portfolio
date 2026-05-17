@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ICONS, PROJECTS, EXPERIENCE, SKILLS } from "./constants";
 import { Section, Card, Badge, Button } from "./components/UI";
@@ -18,6 +18,8 @@ export default function App() {
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   const t = translations[lang];
+  const cvDownloadHref = `${import.meta.env.BASE_URL}${lang === "en" ? "cv-en.pdf" : "cv-ko.pdf"}`;
+  const cvDownloadName = lang === "en" ? "Dylan-Islom-CV-English.pdf" : "Dylan-Islom-CV-Korean.pdf";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,7 +51,7 @@ export default function App() {
     setLang(prev => prev === "en" ? "ko" : "en");
   };
 
-  const handleContactSubmit = async (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setFormStatus("sending");
 
@@ -213,7 +215,12 @@ export default function App() {
                        {t.hero.ctaProjects} <ICONS.Arrow className="group-hover:translate-x-1 transition-transform" />
                     </span>
                   </Button>
-                  <Button variant="outline" className="flex items-center gap-2 border-white/30 hover:bg-white/10 hover:border-white transition-all group/cv">
+                  <Button
+                    variant="outline"
+                    href={cvDownloadHref}
+                    download={cvDownloadName}
+                    className="flex items-center gap-2 border-white/30 hover:bg-white/10 hover:border-white transition-all group/cv"
+                  >
                     <ICONS.Download size={18} className="group-hover/cv:-translate-y-1 transition-transform text-white" /> {t.hero.ctaCv}
                   </Button>
                 </div>
