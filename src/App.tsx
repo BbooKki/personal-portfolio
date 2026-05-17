@@ -49,49 +49,37 @@ export default function App() {
     setLang(prev => prev === "en" ? "ko" : "en");
   };
 
-  const getContactEndpoints = () => {
-    const host = window.location.hostname;
-    const protocol = window.location.protocol;
-
-    return [
-      "/api/contact",
-      `${protocol}//${host}:3004/api/contact`,
-    ];
-  };
-
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormStatus("sending");
 
     try {
-      const requestInit = {
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 20000);
+
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
         body: JSON.stringify(contactForm),
-      };
+      });
 
-      for (const endpoint of getContactEndpoints()) {
-        try {
-          const response = await fetch(endpoint, requestInit);
-          const contentType = response.headers.get("content-type") ?? "";
+      window.clearTimeout(timeout);
 
-          if (response.ok && contentType.includes("application/json")) {
-            const data = await response.json();
-            if (data?.success) {
-              setFormStatus("success");
-              setContactForm({ name: "", email: "", message: "" });
-              setTimeout(() => setFormStatus("idle"), 5000);
-              return;
-            }
-          }
-        } catch {
-          // Try the next endpoint below.
-        }
+      const contentType = response.headers.get("content-type") ?? "";
+      const data = contentType.includes("application/json") ? await response.json() : null;
+
+      if (response.ok && data?.success) {
+        setFormStatus("success");
+        setContactForm({ name: "", email: "", message: "" });
+        setTimeout(() => setFormStatus("idle"), 5000);
+        return;
       }
 
       setFormStatus("error");
       setTimeout(() => setFormStatus("idle"), 5000);
-    } catch {
+    } catch (error) {
+      console.error("Error sending contact form:", error);
       setFormStatus("error");
       setTimeout(() => setFormStatus("idle"), 5000);
     }
