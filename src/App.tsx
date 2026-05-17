@@ -56,8 +56,15 @@ export default function App() {
     try {
       const controller = new AbortController();
       const timeout = window.setTimeout(() => controller.abort(), 20000);
+      const useDirectBackend =
+        Boolean(window.location.port) &&
+        window.location.port !== "80" &&
+        window.location.port !== "443";
+      const contactEndpoint = useDirectBackend
+        ? `${window.location.protocol}//${window.location.hostname}:3004/api/contact`
+        : "/api/contact";
 
-      const response = await fetch("/api/contact", {
+      const response = await fetch(contactEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: controller.signal,
