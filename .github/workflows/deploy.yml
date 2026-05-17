@@ -57,8 +57,7 @@ jobs:
 
             sleep 1
 
-            nohup npx serve -s dist -l 3002 > portfolio-frontend.log 2>&1 &
-            nohup node server.js > portfolio-backend.log 2>&1 &
+            nohup node server.js > portfolio-app.log 2>&1 &
 
             sleep 3
             echo "Frontend PID: $(lsof -ti:3002)"
