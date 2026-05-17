@@ -14,6 +14,8 @@ export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [lang, setLang] = useState<Language>("en");
+  const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });
+  const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   const t = translations[lang];
 
@@ -45,6 +47,29 @@ export default function App() {
 
   const toggleLang = () => {
     setLang(prev => prev === "en" ? "ko" : "en");
+  };
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus("sending");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(contactForm),
+      });
+      if (response.ok) {
+        setFormStatus("success");
+        setContactForm({ name: "", email: "", message: "" });
+        setTimeout(() => setFormStatus("idle"), 5000);
+      } else {
+        setFormStatus("error");
+        setTimeout(() => setFormStatus("idle"), 5000);
+      }
+    } catch {
+      setFormStatus("error");
+      setTimeout(() => setFormStatus("idle"), 5000);
+    }
   };
 
   return (
@@ -473,22 +498,47 @@ export default function App() {
             </div>
 
             <Card className="p-10 border-white/10 bg-white/[0.02]">
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              <form className="space-y-6" onSubmit={handleContactSubmit}>
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-neutral-400 uppercase tracking-widest font-mono">{t.contact.form.name}</label>
-                    <input className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono" />
+                    <input
+                      type="text"
+                      value={contactForm.name}
+                      onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+                      required
+                      className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono"
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-neutral-400 uppercase tracking-widest font-mono">{t.contact.form.email}</label>
-                    <input className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono" />
+                    <input
+                      type="email"
+                      value={contactForm.email}
+                      onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                      required
+                      className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono"
+                    />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-neutral-400 uppercase tracking-widest font-mono">{t.contact.form.message}</label>
-                  <textarea rows={4} className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono resize-none" />
+                  <textarea
+                    rows={4}
+                    value={contactForm.message}
+                    onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-sm p-4 text-white focus:border-white/40 outline-none transition-all font-mono resize-none"
+                  />
                 </div>
-                <Button variant="secondary" className="w-full py-4 text-lg">{t.contact.form.send}</Button>
+                <Button
+                  type="submit"
+                  variant="secondary"
+                  className="w-full py-4 text-lg"
+                  disabled={formStatus === "sending"}
+                >
+                  {formStatus === "sending" ? "SENDING..." : formStatus === "success" ? "SENT!" : formStatus === "error" ? "FAILED" : t.contact.form.send}
+                </Button>
               </form>
             </Card>
           </div>
