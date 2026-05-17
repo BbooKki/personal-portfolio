@@ -49,23 +49,48 @@ export default function App() {
     setLang(prev => prev === "en" ? "ko" : "en");
   };
 
+  const getContactEndpoints = () => {
+    const host = window.location.hostname;
+    const protocol = window.location.protocol;
+
+    return [
+      "/api/contact",
+      `${protocol}//${host}:3004/api/contact`,
+    ];
+  };
+
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormStatus("sending");
+
     try {
-      const response = await fetch("/api/contact", {
+      const requestInit = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(contactForm),
-      });
-      if (response.ok) {
-        setFormStatus("success");
-        setContactForm({ name: "", email: "", message: "" });
-        setTimeout(() => setFormStatus("idle"), 5000);
-      } else {
-        setFormStatus("error");
-        setTimeout(() => setFormStatus("idle"), 5000);
+      };
+
+      for (const endpoint of getContactEndpoints()) {
+        try {
+          const response = await fetch(endpoint, requestInit);
+          const contentType = response.headers.get("content-type") ?? "";
+
+          if (response.ok && contentType.includes("application/json")) {
+            const data = await response.json();
+            if (data?.success) {
+              setFormStatus("success");
+              setContactForm({ name: "", email: "", message: "" });
+              setTimeout(() => setFormStatus("idle"), 5000);
+              return;
+            }
+          }
+        } catch {
+          // Try the next endpoint below.
+        }
       }
+
+      setFormStatus("error");
+      setTimeout(() => setFormStatus("idle"), 5000);
     } catch {
       setFormStatus("error");
       setTimeout(() => setFormStatus("idle"), 5000);
