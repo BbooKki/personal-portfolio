@@ -48,7 +48,7 @@ export const PROJECTS = [
     description: "A feature-rich e-commerce platform for limited clothing, featuring real-time chat and advanced filtering.",
     stack: ["NestJS", "GraphQL", "MongoDB", "Next.js", "WebSocket"],
     impact: "Built with MVR architecture, delivering <100ms response times for 20k+ SKUs.",
-    link: "http://theflowuz.shop",
+    link: "https://flowshop-uz.vercel.app",
     image: "/flowshop.png",
     isCaseStudy: true
   },
@@ -58,7 +58,7 @@ export const PROJECTS = [
     description: "Multi-vendor pet marketplace with robust order management and administrative dashboard.",
     stack: ["Express.js", "MongoDB", "Redux", "Socket.io", "Docker"],
     impact: "Implemented complex financial data modeling and real-time order tracking.",
-    link: "http://168.231.123.112:3001",
+    link: "https://petstore-frontend-zeta.vercel.app",
     image: "/petstore.png",
     isCaseStudy: true
   }
