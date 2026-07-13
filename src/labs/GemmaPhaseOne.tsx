@@ -129,7 +129,10 @@ export default function GemmaPhaseOne() {
       clearInitializationTimer();
       workerRef.current?.terminate();
       setWorkerReady(false);
-      const worker = new Worker(new URL('./gemmaPhaseTwo.worker.ts', import.meta.url), {type: 'module'});
+      // Vite serves the source worker as an ES module during development, but
+      // LiteRT's bundled WASM loader uses importScripts(), which requires a
+      // classic worker in production.
+      const worker = new Worker(new URL('./gemmaPhaseTwo.worker.ts', import.meta.url), {type: import.meta.env.DEV ? 'module' : 'classic'});
       workerRef.current = worker;
       worker.onerror = () => {
         if (!active) return;
