@@ -12,6 +12,7 @@ const suggestions = [
   'What is Dylan’s backend experience?',
   'Why is this AI demo technically interesting?',
 ];
+const INITIALIZATION_TIMEOUT_MS = 3 * 60 * 1000;
 
 function formatBytes(bytes?: number) {
   if (bytes === undefined) return 'Unknown';
@@ -33,29 +34,62 @@ export default function GemmaPhaseOne() {
   const [workerReady, setWorkerReady] = useState(false);
   const [modelLoaded, setModelLoaded] = useState(false);
   const workerRef = useRef<Worker | null>(null);
+  const startWorkerRef = useRef<() => void>(() => undefined);
+  const initializationTimerRef = useRef<number | undefined>(undefined);
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     let active = true;
-    const worker = new Worker(new URL('./gemmaPhaseTwo.worker.ts', import.meta.url));
-    workerRef.current = worker;
-    worker.onmessage = (event: MessageEvent<GemmaWorkerToMainMessage>) => {
-      if (!active) return;
-      const message = event.data;
-      switch (message.type) {
-        case 'worker-ready': setWorkerReady(true); worker.postMessage({type: 'check-cache'} satisfies MainToGemmaWorkerMessage); break;
-        case 'cache-status': setCached(message.cached); break;
-        case 'download-progress': setDownloaded(message.received); setTotal(message.total); setStatus('downloading'); break;
-        case 'initializing': setStatus('initializing'); break;
-        case 'loaded': setModelLoaded(true); setStatus('loaded'); break;
-        case 'generation-chunk': setMessages(current => current.map((item, index) => index === current.length - 1 ? {...item, text: item.text + message.text} : item)); break;
-        case 'generation-complete': setMessages(current => current.map((item, index) => index === current.length - 1 ? {...item, metrics: message.metrics} : item)); setStatus('loaded'); break;
-        case 'conversation-reset': break;
-        case 'cache-cleared': setCached(false); break;
-        case 'cancelled': setStatus(message.operation === 'generation' ? 'loaded' : 'cancelled'); break;
-        case 'error': setError(message.message); setStatus(message.operation === 'generation' ? 'loaded' : 'error'); break;
-      }
+    const clearInitializationTimer = () => {
+      if (initializationTimerRef.current !== undefined) window.clearTimeout(initializationTimerRef.current);
+      initializationTimerRef.current = undefined;
     };
+    const startWorker = () => {
+      clearInitializationTimer();
+      workerRef.current?.terminate();
+      setWorkerReady(false);
+      const worker = new Worker(new URL('./gemmaPhaseTwo.worker.ts', import.meta.url));
+      workerRef.current = worker;
+      worker.onerror = () => {
+        if (!active) return;
+        clearInitializationTimer();
+        setModelLoaded(false);
+        setStatus('error');
+        setError('The on-device runtime stopped unexpectedly. Retry with the saved model.');
+      };
+      worker.onmessage = (event: MessageEvent<GemmaWorkerToMainMessage>) => {
+        if (!active || worker !== workerRef.current) return;
+        const message = event.data;
+        switch (message.type) {
+          case 'worker-ready': setWorkerReady(true); worker.postMessage({type: 'check-cache'} satisfies MainToGemmaWorkerMessage); break;
+          case 'cache-status': setCached(message.cached); break;
+          case 'download-progress': setDownloaded(message.received); setTotal(message.total); setStatus('downloading'); break;
+          case 'initializing':
+            setStatus('initializing');
+            clearInitializationTimer();
+            initializationTimerRef.current = window.setTimeout(() => {
+              if (!active || worker !== workerRef.current) return;
+              worker.terminate();
+              workerRef.current = null;
+              setWorkerReady(false);
+              setModelLoaded(false);
+              setStatus('error');
+              setError('WebGPU initialization exceeded 3 minutes and was stopped. Retry from the saved model.');
+              startWorker();
+            }, INITIALIZATION_TIMEOUT_MS);
+            break;
+          case 'loaded': clearInitializationTimer(); setModelLoaded(true); setStatus('loaded'); break;
+          case 'generation-chunk': setMessages(current => current.map((item, index) => index === current.length - 1 ? {...item, text: item.text + message.text} : item)); break;
+          case 'generation-complete': setMessages(current => current.map((item, index) => index === current.length - 1 ? {...item, metrics: message.metrics} : item)); setStatus('loaded'); break;
+          case 'conversation-reset': break;
+          case 'cache-cleared': setCached(false); break;
+          case 'cancelled': clearInitializationTimer(); setStatus(message.operation === 'generation' ? 'loaded' : 'cancelled'); break;
+          case 'error': clearInitializationTimer(); setError(message.message); setStatus(message.operation === 'generation' ? 'loaded' : 'error'); break;
+        }
+      };
+    };
+    startWorkerRef.current = startWorker;
+    startWorker();
     (async () => {
       try {
         const webGpu = 'gpu' in navigator;
@@ -66,7 +100,7 @@ export default function GemmaPhaseOne() {
         setStatus(adapter && window.isSecureContext ? 'ready' : 'unsupported');
       } catch (cause) { setError(cause instanceof Error ? cause.message : String(cause)); setStatus('error'); }
     })();
-    return () => { active = false; worker.terminate(); workerRef.current = null; };
+    return () => { active = false; clearInitializationTimer(); workerRef.current?.terminate(); workerRef.current = null; };
   }, []);
 
   useEffect(() => { scrollRef.current?.scrollTo({top: scrollRef.current.scrollHeight, behavior: 'smooth'}); }, [messages]);
@@ -91,6 +125,19 @@ export default function GemmaPhaseOne() {
   function keyDown(event: KeyboardEvent<HTMLTextAreaElement>) { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); send(); } }
   function clearChat() { setMessages([]); setError(''); post({type: 'reset-conversation'}); }
   function clearModel() { post({type: 'clear-cache'}); }
+  function cancelLoad() {
+    workerRef.current?.terminate();
+    workerRef.current = null;
+    if (initializationTimerRef.current !== undefined) window.clearTimeout(initializationTimerRef.current);
+    initializationTimerRef.current = undefined;
+    setWorkerReady(false);
+    setModelLoaded(false);
+    setStatus('cancelled');
+    setError(cached
+      ? 'Model loading stopped. Your completed cached model was kept.'
+      : 'Model loading stopped. The partial download was discarded.');
+    startWorkerRef.current();
+  }
 
   return (
     <main className="min-h-screen bg-black text-white">
@@ -110,14 +157,14 @@ export default function GemmaPhaseOne() {
             <div className="mt-7 space-y-3 border-y border-white/10 py-5 font-mono text-[10px]">
               <div className="flex justify-between"><span className="text-neutral-600">MODEL</span><span>Gemma 4 E2B</span></div>
               <div className="flex justify-between"><span className="text-neutral-600">DOWNLOAD</span><span>{formatBytes(GEMMA_MODEL_BYTES)}</span></div>
-              <div className="flex justify-between"><span className="text-neutral-600">RUNTIME</span><span>WebGPU · Worker</span></div>
+              <div className="flex justify-between"><span className="text-neutral-600">RUNTIME</span><span>LiteRT 0.14 · WebGPU</span></div>
               <div className="flex justify-between"><span className="text-neutral-600">LOCAL CACHE</span><span>{cached ? 'SAVED' : 'EMPTY'}</span></div>
             </div>
 
             {!modelLoaded && status !== 'unsupported' && !loading && (
               <button onClick={loadModel} disabled={!workerReady} className="mt-5 flex items-center justify-center gap-2 bg-white px-4 py-3 font-mono text-xs font-bold text-black disabled:opacity-40"><Download size={15} />{cached ? 'Load saved model' : 'Download model'}</button>
             )}
-            {loading && <button onClick={() => post({type: 'cancel-load'})} className="mt-5 border border-white/20 px-4 py-3 font-mono text-xs">Cancel loading</button>}
+            {loading && <button onClick={cancelLoad} className="mt-5 border border-white/20 px-4 py-3 font-mono text-xs">Cancel loading</button>}
             {cached && <button onClick={clearModel} disabled={loading} className="mt-3 flex items-center justify-center gap-2 px-4 py-2 font-mono text-[10px] text-neutral-500 hover:text-white disabled:opacity-30"><HardDrive size={13} />Remove saved copy</button>}
 
             <div className="mt-auto pt-7 font-mono text-[10px] leading-5 text-neutral-600">
@@ -133,7 +180,7 @@ export default function GemmaPhaseOne() {
               <button onClick={clearChat} disabled={!messages.length || status === 'generating'} className="flex items-center gap-2 font-mono text-[10px] text-neutral-500 hover:text-white disabled:opacity-30"><Trash2 size={14} />Clear chat</button>
             </div>
 
-            {loading && <div className="border-b border-white/10 px-5 py-4"><div className="flex justify-between font-mono text-[10px] text-neutral-500"><span>{status === 'initializing' ? 'INITIALIZING WEBGPU RUNTIME' : cached ? 'READING LOCAL MODEL' : 'DOWNLOADING MODEL ONCE'}</span><span>{status === 'initializing' ? 'PLEASE WAIT' : `${progress.toFixed(1)}% · ${formatBytes(downloaded)} / ${formatBytes(total)}`}</span></div><div className="mt-3 h-1 bg-white/10"><div className="h-full bg-white transition-[width]" style={{width: `${status === 'initializing' ? 100 : progress}%`}} /></div></div>}
+            {loading && <div className="border-b border-white/10 px-5 py-4"><div className="flex justify-between font-mono text-[10px] text-neutral-500"><span>{status === 'initializing' ? 'INITIALIZING WEBGPU RUNTIME' : cached ? 'READING LOCAL MODEL' : 'DOWNLOADING MODEL ONCE'}</span><span>{status === 'initializing' ? 'AUTO-STOPS AFTER 3 MIN' : `${progress.toFixed(1)}% · ${formatBytes(downloaded)} / ${formatBytes(total)}`}</span></div><div className="mt-3 h-1 bg-white/10"><div className="h-full bg-white transition-[width]" style={{width: `${status === 'initializing' ? 100 : progress}%`}} /></div></div>}
 
             <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-7 md:px-8" aria-live="polite">
               {!messages.length ? <div className="mx-auto flex h-full max-w-2xl flex-col items-center justify-center text-center">

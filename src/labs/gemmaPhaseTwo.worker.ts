@@ -7,7 +7,7 @@ import type {
 } from './gemmaPhaseTwo.protocol';
 
 const workerScope = globalThis as unknown as DedicatedWorkerGlobalScope;
-const LITERT_WASM_BASE = 'https://cdn.jsdelivr.net/npm/@litert-lm/core@0.12.1/wasm/';
+const LITERT_WASM_BASE = 'https://cdn.jsdelivr.net/npm/@litert-lm/core@0.14.0/wasm/';
 const MODEL_CACHE = 'dylan-gemma-model-v1';
 const SYSTEM_PROMPT = `You are Dylan Islom's concise portfolio assistant. Dylan is a full-stack and mobile engineer in Seoul with production experience in TypeScript, NestJS, Express, MongoDB, GraphQL, Flutter, Vue and DevOps. His live demos include Flowshop, an e-commerce system with real-time chat and advanced filtering, and Our Petstore, a multi-vendor marketplace. Answer only questions about Dylan, his engineering work, or this demo. This Gemma 4 E2B model runs privately in the visitor's browser using LiteRT-LM, WebGPU and a dedicated Web Worker. If information is not provided, say you do not know rather than inventing it.`;
 
@@ -30,8 +30,8 @@ async function createConversation() {
   if (conversation) await conversation.delete();
   conversation = await engine.createConversation({
     preface: {messages: [{role: 'system', content: SYSTEM_PROMPT}]},
-    prefillPrefaceOnInit: true,
-    sessionConfig: {maxOutputTokens: 256, samplerParams: {temperature: 0.2, p: 0.9, k: 40}},
+    prefillPrefaceOnInit: false,
+    sessionConfig: {maxOutputTokens: 192, samplerParams: {temperature: 0.2, p: 0.9, k: 40}},
   });
 }
 
@@ -115,7 +115,7 @@ async function loadModel(modelUrl: string, verifiedBytes: number) {
 
     engine = await Engine.create({
       model: monitoredStream,
-      mainExecutorSettings: {maxNumTokens: 4096},
+      mainExecutorSettings: {maxNumTokens: 1024},
     });
 
     await createConversation();
