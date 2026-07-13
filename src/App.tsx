@@ -357,6 +357,10 @@ export default function App() {
               >
                 <div className="h-full flex flex-col glass rounded-3xl overflow-hidden border shadow-sm hover:shadow-2xl transition-all duration-500">
                   <div className="h-64 bg-neutral-800 overflow-hidden relative">
+                    <div className="absolute top-4 right-4 z-20 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/70 px-3 py-1.5 font-mono text-[9px] font-bold tracking-widest text-white backdrop-blur-md">
+                      <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" aria-hidden="true" />
+                      LIVE · CI/CD ENABLED
+                    </div>
                     <div className="absolute inset-x-0 bottom-0 p-6 z-10 bg-gradient-to-t from-black/80 to-transparent">
                       <Badge className="bg-white/20 text-white border-white/30 mb-2">
                         {t.projects.items[idx]?.category || project.category}

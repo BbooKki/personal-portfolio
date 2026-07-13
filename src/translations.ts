@@ -31,7 +31,7 @@ export const translations = {
     },
     projects: {
       title: "Live Demos",
-      subtitle: "Explore live applications showcasing real-world architecture, performance, and product engineering.",
+      subtitle: "Explore live, continuously deployed applications showcasing real-world architecture, performance, and product engineering.",
       visit: "Visit Site",
       confidential: "Confidential Project",
       githubTitle: "Active Open Source",
@@ -123,7 +123,7 @@ export const translations = {
     },
     projects: {
       title: "라이브 데모",
-      subtitle: "실제 아키텍처, 성능 및 제품 엔지니어링을 보여주는 라이브 애플리케이션을 살펴보세요.",
+      subtitle: "실제 아키텍처, 성능 및 제품 엔지니어링을 보여주는 지속적으로 배포되는 라이브 애플리케이션을 살펴보세요.",
       visit: "사이트 방문",
       confidential: "기밀 프로젝트",
       githubTitle: "활발한 오픈 소스 활동",
