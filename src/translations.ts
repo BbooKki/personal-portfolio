@@ -22,7 +22,7 @@ export const translations = {
         experience: "Years Experience",
         products: "Products Shipped",
         users: "Total Users Managed",
-        crashFree: "Crash-free Rate"
+        stabilityMonitoring: "Stability Monitoring"
       }
     },
     skills: {
@@ -114,7 +114,7 @@ export const translations = {
         experience: "경력 연수",
         products: "출시 제품",
         users: "관리 유저 수",
-        crashFree: "무결점 유지율"
+        stabilityMonitoring: "안정성 모니터링"
       }
     },
     skills: {

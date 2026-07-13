@@ -310,8 +310,8 @@ export default function App() {
                 <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-bold font-mono">{t.about.stats.users}</p>
               </Card>
               <Card className="flex flex-col gap-2">
-                <h4 className="text-4xl font-black text-white terminal-text">99%</h4>
-                <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-bold font-mono">{t.about.stats.crashFree}</p>
+                <h4 className="text-4xl font-black text-white terminal-text">LIVE</h4>
+                <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-bold font-mono">{t.about.stats.stabilityMonitoring}</p>
               </Card>
             </div>
           </div>
