@@ -10,6 +10,8 @@ const workerScope = globalThis as unknown as DedicatedWorkerGlobalScope;
 const LITERT_WASM_BASE = 'https://cdn.jsdelivr.net/npm/@litert-lm/core@0.14.0/wasm/';
 const MODEL_CACHE = 'dylan-gemma-model-v2';
 const LEGACY_MODEL_CACHE = 'dylan-gemma-model-v1';
+const MAX_CONTEXT_TOKENS = 4096;
+const MAX_RESTORED_CONTEXT_CHARACTERS = 6000;
 const SYSTEM_PROMPT = `You are Ask Dylan's AI, a concise and accurate portfolio assistant for Dylan Islom. Your job is to help a visitor understand Dylan's background, projects, skills, education, and this on-device AI demo.
 
 LANGUAGE
@@ -158,7 +160,7 @@ async function loadModel(modelUrl: string, verifiedBytes: number) {
 
     engine = await Engine.create({
       model: monitoredStream,
-      mainExecutorSettings: {maxNumTokens: 1024},
+      mainExecutorSettings: {maxNumTokens: MAX_CONTEXT_TOKENS},
     });
 
     await createConversation();
@@ -192,7 +194,7 @@ async function generate(prompt: string, context?: Array<{role: 'user' | 'assista
 
   try {
     const restoredContext = context?.length
-      ? `Here is the conversation transcript from before this browser session. Use it as context, but do not repeat it or mention this restoration process.\n\n${context.map(turn => `${turn.role === 'user' ? 'Visitor' : 'Assistant'}: ${turn.text}`).join('\n\n')}\n\nVisitor's new question: ${prompt}`
+      ? `Here is the conversation transcript from before this browser session. Use it as context, but do not repeat it or mention this restoration process.\n\n${context.map(turn => `${turn.role === 'user' ? 'Visitor' : 'Assistant'}: ${turn.text}`).join('\n\n').slice(-MAX_RESTORED_CONTEXT_CHARACTERS)}\n\nVisitor's new question: ${prompt}`
       : prompt;
     const stream = conversation.sendMessageStreaming(restoredContext);
     for await (const chunk of stream) {
