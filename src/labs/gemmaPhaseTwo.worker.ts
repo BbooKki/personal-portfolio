@@ -76,11 +76,20 @@ async function loadModel(modelUrl: string, verifiedBytes: number) {
     const total = Number.isFinite(contentLength) && contentLength > 0
       ? contentLength
       : verifiedBytes;
+
+    // Clone before locking the original body with getReader(). A Response
+    // cannot be cloned after its stream has started being consumed.
+    if (!cachedResponse) {
+      const cacheCopy = modelResponse.clone();
+      void cache.put(modelUrl, cacheCopy)
+        .then(() => post({type: 'cache-status', cached: true}))
+        .catch(() => undefined);
+    }
+
     const reader = modelResponse.body.getReader();
     let received = 0;
     let lastProgressAt = 0;
 
-    if (!cachedResponse) void cache.put(modelUrl, modelResponse.clone()).then(() => post({type: 'cache-status', cached: true})).catch(() => undefined);
     const monitoredStream = new ReadableStream<Uint8Array>({
       async pull(streamController) {
         const {done, value} = await reader.read();
