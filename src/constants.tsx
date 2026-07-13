@@ -43,7 +43,7 @@ export const ICONS = {
 
 export const PROJECTS = [
   {
-    title: "Flowshop.uz",
+    title: "Flowshop",
     category: "E-Commerce",
     description: "A feature-rich e-commerce platform for limited clothing, featuring real-time chat and advanced filtering.",
     stack: ["NestJS", "GraphQL", "MongoDB", "Next.js", "WebSocket"],

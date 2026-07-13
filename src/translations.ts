@@ -30,8 +30,8 @@ export const translations = {
       subtitle: "A focused stack optimized for performance, scalability, and maintainability."
     },
     projects: {
-      title: "Featured Work",
-      subtitle: "Case studies from production applications and selected personal engineering projects.",
+      title: "Live Demos",
+      subtitle: "Explore live applications showcasing real-world architecture, performance, and product engineering.",
       visit: "Visit Site",
       confidential: "Confidential Project",
       githubTitle: "Active Open Source",
@@ -122,8 +122,8 @@ export const translations = {
       subtitle: "성능, 확장성 및 유지보수성에 최적화된 기술 스택입니다."
     },
     projects: {
-      title: "주요 프로젝트",
-      subtitle: "상용 애플리케이션 사례 연구 및 엄선된 개인 엔지니어링 프로젝트입니다.",
+      title: "라이브 데모",
+      subtitle: "실제 아키텍처, 성능 및 제품 엔지니어링을 보여주는 라이브 애플리케이션을 살펴보세요.",
       visit: "사이트 방문",
       confidential: "기밀 프로젝트",
       githubTitle: "활발한 오픈 소스 활동",
