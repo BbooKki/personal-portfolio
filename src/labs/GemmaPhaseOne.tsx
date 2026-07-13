@@ -263,7 +263,7 @@ export default function GemmaPhaseOne() {
         <div className="grid flex-1 gap-6 py-6 lg:grid-cols-[290px_minmax(0,1fr)]">
           <aside className="flex flex-col border border-white/10 bg-white/[.02] p-5 lg:min-h-[650px]">
             <div className="flex h-10 w-10 items-center justify-center border border-white/15 bg-white/5"><Bot size={20} /></div>
-            <p className="mt-6 font-mono text-[10px] tracking-[.2em] text-neutral-500">LIVE DEMO 03 · GEMMA</p>
+            <p className="mt-6 font-mono text-[10px] tracking-[.2em] text-neutral-500">ON-DEVICE AI · GEMMA</p>
             <h1 className="mt-3 text-3xl font-black normal-case">Ask Dylan’s AI</h1>
             <p className="mt-4 text-sm leading-6 text-neutral-400">Chat with Gemma 4 E2B running entirely on your device. Your prompts never leave this browser.</p>
             <div className="mt-5 border border-white/10 bg-white/[.03] p-3 text-xs leading-5 text-neutral-500"><span className="font-semibold text-neutral-300">First visit?</span> The model downloads once, then stays cached locally. Chat history is saved only in this browser.</div>

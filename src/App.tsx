@@ -425,7 +425,7 @@ export default function App() {
               <div className="flex items-start gap-5">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-white/15 bg-white/5"><ICONS.AI size={22} /></div>
                 <div>
-                  <div className="flex flex-wrap items-center gap-3"><span className="font-mono text-[10px] font-bold tracking-[.18em] text-neutral-500">LIVE DEMO 03</span><Badge>ON-DEVICE AI</Badge></div>
+                  <div className="flex flex-wrap items-center gap-3"><Badge>ON-DEVICE AI</Badge></div>
                   <h3 className="mt-3 text-2xl font-bold normal-case">Ask Dylan’s AI</h3>
                   <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-400">Chat with Gemma 4 E2B running privately in your browser through WebGPU and a dedicated Web Worker.</p>
                 </div>
