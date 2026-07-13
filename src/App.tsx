@@ -419,6 +419,20 @@ export default function App() {
               </motion.div>
             ))}
           </div>
+
+          <a href="/lab/gemma" className="group mt-8 block border border-white/10 bg-white/[0.02] p-6 transition hover:border-white/30 md:p-8">
+            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+              <div className="flex items-start gap-5">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-white/15 bg-white/5"><ICONS.AI size={22} /></div>
+                <div>
+                  <div className="flex flex-wrap items-center gap-3"><span className="font-mono text-[10px] font-bold tracking-[.18em] text-neutral-500">LIVE DEMO 03</span><Badge>ON-DEVICE AI</Badge></div>
+                  <h3 className="mt-3 text-2xl font-bold normal-case">Ask Dylan’s AI</h3>
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-400">Chat with Gemma 4 E2B running privately in your browser through WebGPU and a dedicated Web Worker.</p>
+                </div>
+              </div>
+              <span className="flex shrink-0 items-center gap-2 font-mono text-xs font-bold text-white">OPEN DEMO <ICONS.Arrow className="transition-transform group-hover:translate-x-1" /></span>
+            </div>
+          </a>
           
           <div className="mt-20 flex flex-col items-center">
             <Card className="w-full md:w-fit px-10 py-8 text-center flex flex-col md:flex-row items-center gap-8 border-dashed border-2 border-white/10 bg-white/[0.02]">

@@ -8,6 +8,8 @@ import type {
 
 const workerScope = globalThis as unknown as DedicatedWorkerGlobalScope;
 const LITERT_WASM_BASE = 'https://cdn.jsdelivr.net/npm/@litert-lm/core@0.12.1/wasm/';
+const MODEL_CACHE = 'dylan-gemma-model-v1';
+const SYSTEM_PROMPT = `You are Dylan Islom's concise portfolio assistant. Dylan is a full-stack and mobile engineer in Seoul with production experience in TypeScript, NestJS, Express, MongoDB, GraphQL, Flutter, Vue and DevOps. His live demos include Flowshop, an e-commerce system with real-time chat and advanced filtering, and Our Petstore, a multi-vendor marketplace. Answer only questions about Dylan, his engineering work, or this demo. This Gemma 4 E2B model runs privately in the visitor's browser using LiteRT-LM, WebGPU and a dedicated Web Worker. If information is not provided, say you do not know rather than inventing it.`;
 
 // Emscripten cannot infer the imported script's directory from importScripts
 // inside a bundled classic worker, so point its companion .wasm fetch back to
@@ -22,6 +24,16 @@ let engine: Engine | null = null;
 let conversation: Conversation | null = null;
 let loadAbortController: AbortController | null = null;
 let generationCancelled = false;
+
+async function createConversation() {
+  if (!engine) throw new Error('The model is not loaded.');
+  if (conversation) await conversation.delete();
+  conversation = await engine.createConversation({
+    preface: {messages: [{role: 'system', content: SYSTEM_PROMPT}]},
+    prefillPrefaceOnInit: true,
+    sessionConfig: {maxOutputTokens: 256, samplerParams: {temperature: 0.2, p: 0.9, k: 40}},
+  });
+}
 
 function post(message: GemmaWorkerToMainMessage) {
   workerScope.postMessage(message);
@@ -53,7 +65,9 @@ async function loadModel(modelUrl: string, verifiedBytes: number) {
   loadAbortController = controller;
 
   try {
-    const modelResponse = await fetch(modelUrl, {signal: controller.signal});
+    const cache = await caches.open(MODEL_CACHE);
+    const cachedResponse = await cache.match(modelUrl);
+    const modelResponse = cachedResponse ?? await fetch(modelUrl, {signal: controller.signal});
     if (!modelResponse.ok || !modelResponse.body) {
       throw new Error(`Model download failed with HTTP ${modelResponse.status}.`);
     }
@@ -66,6 +80,7 @@ async function loadModel(modelUrl: string, verifiedBytes: number) {
     let received = 0;
     let lastProgressAt = 0;
 
+    if (!cachedResponse) void cache.put(modelUrl, modelResponse.clone()).then(() => post({type: 'cache-status', cached: true})).catch(() => undefined);
     const monitoredStream = new ReadableStream<Uint8Array>({
       async pull(streamController) {
         const {done, value} = await reader.read();
@@ -94,19 +109,7 @@ async function loadModel(modelUrl: string, verifiedBytes: number) {
       mainExecutorSettings: {maxNumTokens: 4096},
     });
 
-    conversation = await engine.createConversation({
-      preface: {
-        messages: [{
-          role: 'system',
-          content: 'You are testing an on-device portfolio assistant for Dylan Islom, a full-stack engineer in Seoul. Keep responses concise and state that this is a Phase 2 Web Worker feasibility test.',
-        }],
-      },
-      prefillPrefaceOnInit: true,
-      sessionConfig: {
-        maxOutputTokens: 256,
-        samplerParams: {temperature: 0.2, p: 0.9, k: 40},
-      },
-    });
+    await createConversation();
 
     loadAbortController = null;
     post({type: 'loaded', loadMs: performance.now() - startedAt});
@@ -183,6 +186,15 @@ workerScope.addEventListener('message', event => {
       generationCancelled = true;
       conversation?.cancel();
       post({type: 'cancelled', operation: 'generation'});
+      break;
+    case 'reset-conversation':
+      void createConversation().then(() => post({type: 'conversation-reset'})).catch(cause => post({type: 'error', operation: 'generation', message: cause instanceof Error ? cause.message : String(cause)}));
+      break;
+    case 'check-cache':
+      void caches.open(MODEL_CACHE).then(cache => cache.match(message.type === 'check-cache' ? 'https://huggingface.co/litert-community/gemma-4-E2B-it-litert-lm/resolve/main/gemma-4-E2B-it-web.litertlm' : '')).then(response => post({type: 'cache-status', cached: Boolean(response)}));
+      break;
+    case 'clear-cache':
+      void caches.delete(MODEL_CACHE).then(() => post({type: 'cache-cleared'}));
       break;
   }
 });

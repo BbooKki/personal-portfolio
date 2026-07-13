@@ -11,7 +11,10 @@ export type MainToGemmaWorkerMessage =
   | {type: 'load'; modelUrl: string; verifiedBytes: number}
   | {type: 'generate'; prompt: string}
   | {type: 'cancel-load'}
-  | {type: 'cancel-generation'};
+  | {type: 'cancel-generation'}
+  | {type: 'reset-conversation'}
+  | {type: 'check-cache'}
+  | {type: 'clear-cache'};
 
 export type GemmaWorkerToMainMessage =
   | {type: 'worker-ready'}
@@ -20,5 +23,8 @@ export type GemmaWorkerToMainMessage =
   | {type: 'loaded'; loadMs: number}
   | {type: 'generation-chunk'; text: string}
   | {type: 'generation-complete'; metrics: GenerationMetrics}
+  | {type: 'conversation-reset'}
+  | {type: 'cache-status'; cached: boolean}
+  | {type: 'cache-cleared'}
   | {type: 'cancelled'; operation: 'load' | 'generation'}
   | {type: 'error'; operation: 'load' | 'generation'; message: string};
