@@ -33,6 +33,7 @@ export default function GemmaPhaseOne() {
   const [error, setError] = useState('');
   const [workerReady, setWorkerReady] = useState(false);
   const [modelLoaded, setModelLoaded] = useState(false);
+  const modelLoadedRef = useRef(false);
   const workerRef = useRef<Worker | null>(null);
   const startWorkerRef = useRef<() => void>(() => undefined);
   const initializationTimerRef = useRef<number | undefined>(undefined);
@@ -53,6 +54,7 @@ export default function GemmaPhaseOne() {
       worker.onerror = () => {
         if (!active) return;
         clearInitializationTimer();
+        modelLoadedRef.current = false;
         setModelLoaded(false);
         setStatus('error');
         setError('The on-device runtime stopped unexpectedly. Retry with the saved model.');
@@ -63,8 +65,12 @@ export default function GemmaPhaseOne() {
         switch (message.type) {
           case 'worker-ready': setWorkerReady(true); worker.postMessage({type: 'check-cache'} satisfies MainToGemmaWorkerMessage); break;
           case 'cache-status': setCached(message.cached); break;
-          case 'download-progress': setDownloaded(message.received); setTotal(message.total); setStatus('downloading'); break;
+          case 'download-progress':
+            if (modelLoadedRef.current) break;
+            setDownloaded(message.received); setTotal(message.total); setStatus('downloading');
+            break;
           case 'initializing':
+            if (modelLoadedRef.current) break;
             setStatus('initializing');
             clearInitializationTimer();
             initializationTimerRef.current = window.setTimeout(() => {
@@ -72,13 +78,14 @@ export default function GemmaPhaseOne() {
               worker.terminate();
               workerRef.current = null;
               setWorkerReady(false);
+              modelLoadedRef.current = false;
               setModelLoaded(false);
               setStatus('error');
               setError('WebGPU initialization exceeded 3 minutes and was stopped. Retry from the saved model.');
               startWorker();
             }, INITIALIZATION_TIMEOUT_MS);
             break;
-          case 'loaded': clearInitializationTimer(); setModelLoaded(true); setStatus('loaded'); break;
+          case 'loaded': clearInitializationTimer(); modelLoadedRef.current = true; setModelLoaded(true); setStatus('loaded'); break;
           case 'generation-chunk': setMessages(current => current.map((item, index) => index === current.length - 1 ? {...item, text: item.text + message.text} : item)); break;
           case 'generation-complete': setMessages(current => current.map((item, index) => index === current.length - 1 ? {...item, metrics: message.metrics} : item)); setStatus('loaded'); break;
           case 'conversation-reset': break;
@@ -106,9 +113,11 @@ export default function GemmaPhaseOne() {
   useEffect(() => { scrollRef.current?.scrollTo({top: scrollRef.current.scrollHeight, behavior: 'smooth'}); }, [messages]);
   const post = (message: MainToGemmaWorkerMessage) => workerRef.current?.postMessage(message);
   const progress = total ? Math.min(100, downloaded / total * 100) : 0;
-  const loading = status === 'downloading' || status === 'initializing';
+  const loading = !modelLoaded && (status === 'downloading' || status === 'initializing');
 
   function loadModel() {
+    modelLoadedRef.current = false;
+    setModelLoaded(false);
     setError(''); setDownloaded(0); setTotal(GEMMA_MODEL_BYTES); setStatus(cached ? 'initializing' : 'downloading');
     post({type: 'load', modelUrl: GEMMA_MODEL_URL, verifiedBytes: GEMMA_MODEL_BYTES});
   }
@@ -131,6 +140,7 @@ export default function GemmaPhaseOne() {
     if (initializationTimerRef.current !== undefined) window.clearTimeout(initializationTimerRef.current);
     initializationTimerRef.current = undefined;
     setWorkerReady(false);
+    modelLoadedRef.current = false;
     setModelLoaded(false);
     setStatus('cancelled');
     setError(cached
