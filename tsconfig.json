@@ -7,8 +7,10 @@
     "lib": [
       "ES2022",
       "DOM",
-      "DOM.Iterable"
+      "DOM.Iterable",
+      "DOM.AsyncIterable"
     ],
+    "types": ["node", "@webgpu/types"],
     "skipLibCheck": true,
     "moduleResolution": "bundler",
     "isolatedModules": true,
