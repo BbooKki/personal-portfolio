@@ -420,17 +420,28 @@ export default function App() {
             ))}
           </div>
 
-          <a href="/lab/gemma" className="group mt-8 block border border-white/10 bg-white/[0.02] p-6 transition hover:border-white/30 md:p-8">
-            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-              <div className="flex items-start gap-5">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-white/15 bg-white/5"><ICONS.AI size={22} /></div>
-                <div>
-                  <div className="flex flex-wrap items-center gap-3"><Badge>ON-DEVICE AI</Badge></div>
-                  <h3 className="mt-3 text-2xl font-bold normal-case">Ask Dylan’s AI</h3>
-                  <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-400">Chat with Gemma 4 E2B running privately in your browser through WebGPU and a dedicated Web Worker.</p>
+          <a href="/lab/gemma" className="group relative mt-8 block overflow-hidden border border-white/30 bg-gradient-to-br from-white/[0.12] via-white/[0.04] to-transparent p-6 shadow-[0_0_45px_rgba(255,255,255,0.06)] transition hover:border-white/70 hover:shadow-[0_0_55px_rgba(255,255,255,0.12)] md:p-10">
+            <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-white/[0.08] blur-3xl transition group-hover:bg-white/[0.14]" />
+            <div className="relative grid gap-8 lg:grid-cols-[1fr_280px] lg:items-center">
+              <div>
+                <div className="flex flex-wrap items-center gap-3">
+                  <Badge className="border-white/40 bg-white text-black">TRY THE AI ASSISTANT</Badge>
+                  <span className="flex items-center gap-2 font-mono text-[10px] font-bold tracking-[.16em] text-emerald-300"><span className="h-2 w-2 animate-pulse rounded-full bg-emerald-300" /> RUNS LOCALLY</span>
                 </div>
+                <div className="mt-5 flex items-start gap-4">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center border border-white/30 bg-black/40"><ICONS.AI size={26} /></div>
+                  <div>
+                    <h3 className="text-3xl font-black tracking-tight text-white md:text-4xl normal-case">Ask Dylan’s AI</h3>
+                    <p className="mt-3 max-w-2xl text-sm leading-6 text-neutral-300 md:text-base">Have a technical question about Dylan’s experience, projects, or architecture decisions? Ask the private, on-device assistant powered by Gemma.</p>
+                  </div>
+                </div>
+                <div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] font-bold tracking-[.14em] text-neutral-500"><span>PRIVATE</span><span>WEBGPU</span><span>EN / KO</span><span>NO SIGN-IN</span></div>
               </div>
-              <span className="flex shrink-0 items-center gap-2 font-mono text-xs font-bold text-white">OPEN DEMO <ICONS.Arrow className="transition-transform group-hover:translate-x-1" /></span>
+              <div className="border border-white/15 bg-black/50 p-5 backdrop-blur-sm">
+                <p className="font-mono text-[9px] font-bold tracking-[.16em] text-neutral-600">TRY ASKING</p>
+                <p className="mt-3 text-sm leading-6 text-neutral-200">“What has Dylan built with Flutter?”</p>
+                <span className="mt-5 flex items-center gap-2 font-mono text-xs font-bold text-white">START A PRIVATE CHAT <ICONS.Arrow size={16} className="transition-transform group-hover:translate-x-1" /></span>
+              </div>
             </div>
           </a>
           
