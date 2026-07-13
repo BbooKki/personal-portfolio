@@ -17,6 +17,7 @@ Built with **React**, **TypeScript**, **Tailwind CSS v4**, and **Vite**, deploye
 - ⚡ **Smooth animations** — powered by Motion (formerly Framer Motion)
 - 🔗 **Project showcase** with live links and tech stack tags
 - 📄 **Localized CV downloads** (English & Korean)
+- 🛡️ **Production safeguards** — browser capability checks, local cache migration, privacy attribution, and `VITE_GEMMA_ENABLED` kill switch
 
 ## Tech Stack
 
@@ -95,6 +96,8 @@ Built with **React**, **TypeScript**, **Tailwind CSS v4**, and **Vite**, deploye
 ## Deployment
 
 Deployed on Vercel with zero-config. The `vercel.json` handles SPA fallback routing and the `/api/contact` serverless function.
+
+To temporarily disable the browser AI demo without removing it from the site, set the Vercel environment variable `VITE_GEMMA_ENABLED=false` and redeploy. Omit it or set it to `true` to enable the demo.
 
 ## License
 

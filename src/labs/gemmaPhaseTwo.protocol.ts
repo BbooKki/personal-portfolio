@@ -9,7 +9,7 @@ export type GenerationMetrics = {
 
 export type MainToGemmaWorkerMessage =
   | {type: 'load'; modelUrl: string; verifiedBytes: number}
-  | {type: 'generate'; prompt: string}
+  | {type: 'generate'; prompt: string; context?: Array<{role: 'user' | 'assistant'; text: string}>}
   | {type: 'cancel-load'}
   | {type: 'cancel-generation'}
   | {type: 'reset-conversation'}
