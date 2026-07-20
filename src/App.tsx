@@ -5,7 +5,7 @@
 
 import { useState, useEffect, type FormEvent } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ICONS, PROJECTS, EXPERIENCE, SKILLS } from "./constants";
+import { CV_COPILOT_DEMO, ICONS, PROJECTS, EXPERIENCE, SKILLS } from "./constants";
 import { Section, Card, Badge, Button } from "./components/UI";
 import { translations, Language } from "./translations";
 
@@ -348,7 +348,7 @@ export default function App() {
           <div className="grid md:grid-cols-2 gap-10">
             {PROJECTS.map((project, idx) => (
               <motion.div
-                key={idx}
+                key={project.title}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -359,7 +359,7 @@ export default function App() {
                   <div className="h-64 bg-neutral-800 overflow-hidden relative">
                     <div className="absolute top-4 right-4 z-20 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/70 px-3 py-1.5 font-mono text-[9px] font-bold tracking-widest text-white backdrop-blur-md">
                       <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" aria-hidden="true" />
-                      LIVE · CI/CD ENABLED
+                      DEMO {project.demoNumber} · LIVE
                     </div>
                     <div className="absolute inset-x-0 bottom-0 p-6 z-10 bg-gradient-to-t from-black/80 to-transparent">
                       <Badge className="bg-white/20 text-white border-white/30 mb-2">
@@ -425,7 +425,7 @@ export default function App() {
             <div className="relative grid gap-8 lg:grid-cols-[1fr_280px] lg:items-center">
               <div>
                 <div className="flex flex-wrap items-center gap-3">
-                  <Badge className="border-white/40 bg-white text-black">TRY THE AI ASSISTANT</Badge>
+                  <Badge className="border-white/40 bg-white text-black">DEMO 03 · TRY THE AI ASSISTANT</Badge>
                   <span className="flex items-center gap-2 font-mono text-[10px] font-bold tracking-[.16em] text-emerald-300"><span className="h-2 w-2 animate-pulse rounded-full bg-emerald-300" /> RUNS LOCALLY</span>
                 </div>
                 <div className="mt-5 flex items-start gap-4">
@@ -444,6 +444,50 @@ export default function App() {
               </div>
             </div>
           </a>
+
+          <article className="group relative mt-8 overflow-hidden border border-white/20 bg-white/[0.03] transition hover:border-white/60 lg:grid lg:grid-cols-[1.05fr_0.95fr]">
+            <a
+              href={CV_COPILOT_DEMO.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative block min-h-72 overflow-hidden border-b border-white/10 bg-neutral-900 lg:min-h-full lg:border-b-0 lg:border-r"
+              aria-label={`${t.projects.cvCopilot.visit}: ${CV_COPILOT_DEMO.title}`}
+            >
+              <img
+                src={CV_COPILOT_DEMO.image}
+                alt="CV Copilot landing page with a monochrome CV tailoring workflow"
+                className="absolute inset-0 h-full w-full object-cover object-top transition duration-700 group-hover:scale-[1.02]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+              <span className="absolute left-5 top-5 border border-white/30 bg-black/80 px-3 py-2 font-mono text-[10px] font-bold tracking-[.16em] text-white backdrop-blur">
+                DEMO {CV_COPILOT_DEMO.demoNumber} · LIVE
+              </span>
+            </a>
+
+            <div className="flex flex-col p-7 md:p-10">
+              <Badge className="mb-4 w-fit border-white/20 bg-white/5 text-neutral-300">{t.projects.cvCopilot.category}</Badge>
+              <h3 className="text-3xl font-black tracking-tight text-white normal-case md:text-4xl">{CV_COPILOT_DEMO.title}</h3>
+              <p className="mt-4 text-sm leading-6 text-neutral-300 md:text-base">{t.projects.cvCopilot.description}</p>
+              <div className="relative mt-6 overflow-hidden border border-white/10 bg-black/40 p-5">
+                <div className="absolute inset-0 grid-bg-fine opacity-10" />
+                <p className="relative font-mono text-[10px] font-bold tracking-[.16em] text-white">SYSTEM_OUTPUT // ENGINEERING</p>
+                <p className="relative mt-3 text-sm leading-6 text-neutral-400">{t.projects.cvCopilot.impact}</p>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-x-4 gap-y-2">
+                {CV_COPILOT_DEMO.stack.map((technology) => (
+                  <span key={technology} className="font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-500">{technology}</span>
+                ))}
+              </div>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <a href={CV_COPILOT_DEMO.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-white px-5 py-3 font-mono text-xs font-bold text-black transition hover:bg-neutral-200">
+                  {t.projects.cvCopilot.visit} <ICONS.External size={15} />
+                </a>
+                <a href={CV_COPILOT_DEMO.source} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border border-white/20 px-5 py-3 font-mono text-xs font-bold text-white transition hover:border-white/60">
+                  {t.projects.cvCopilot.source} <ICONS.GitHub size={15} />
+                </a>
+              </div>
+            </div>
+          </article>
           
           <div className="mt-20 flex flex-col items-center">
             <Card className="w-full md:w-fit px-10 py-8 text-center flex flex-col md:flex-row items-center gap-8 border-dashed border-2 border-white/10 bg-white/[0.02]">

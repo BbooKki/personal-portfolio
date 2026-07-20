@@ -47,7 +47,14 @@ export const translations = {
           description: "Multi-vendor pet marketplace with robust order management and administrative dashboard.",
           impact: "Implemented complex financial data modeling and real-time order tracking."
         }
-      ]
+      ],
+      cvCopilot: {
+        category: "AI / Developer Tools",
+        description: "A privacy-conscious CV editor that compares real experience with a target role, proposes reviewable improvements, and exports polished PDFs.",
+        impact: "Built truthful, reversible AI workflows with local Gemma inference, guarded job-page extraction, four shared-schema templates, and optional cloud persistence.",
+        visit: "Try Demo 04",
+        source: "View Source"
+      }
     },
     experience: {
       title: "Professional Experience",
@@ -139,7 +146,14 @@ export const translations = {
           description: "강력한 주문 관리 및 관리자 대시보드를 갖춘 멀티 벤더 반려동물 마켓플레이스입니다.",
           impact: "복잡한 금융 데이터 모델링 및 실시간 주문 추적 기능을 구현했습니다."
         }
-      ]
+      ],
+      cvCopilot: {
+        category: "AI / 개발자 도구",
+        description: "실제 경력을 목표 직무와 비교하고, 검토 가능한 개선안을 제안하며, 완성도 높은 PDF를 내보내는 개인정보 보호 중심 CV 편집기입니다.",
+        impact: "로컬 Gemma 추론, 안전한 채용 공고 추출, 공통 스키마 기반 4개 템플릿, 선택적 클라우드 저장을 갖춘 진실하고 되돌릴 수 있는 AI 워크플로를 구축했습니다.",
+        visit: "데모 04 체험",
+        source: "소스 보기"
+      }
     },
     experience: {
       title: "업무 경력",

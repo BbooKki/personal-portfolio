@@ -43,6 +43,7 @@ export const ICONS = {
 
 export const PROJECTS = [
   {
+    demoNumber: "01",
     title: "Flowshop",
     category: "E-Commerce",
     description: "A feature-rich e-commerce platform for limited clothing, featuring real-time chat and advanced filtering.",
@@ -53,6 +54,7 @@ export const PROJECTS = [
     isCaseStudy: true
   },
   {
+    demoNumber: "02",
     title: "Our Petstore",
     category: "E-Commerce / MVC",
     description: "Multi-vendor pet marketplace with robust order management and administrative dashboard.",
@@ -63,6 +65,15 @@ export const PROJECTS = [
     isCaseStudy: true
   }
 ];
+
+export const CV_COPILOT_DEMO = {
+  title: "CV Copilot",
+  demoNumber: "04",
+  stack: ["React", "TypeScript", "Gemma", "WebGPU", "Supabase"],
+  link: "https://cv-copilot-lovat.vercel.app",
+  source: "https://github.com/BbooKki/cv-copilot",
+  image: "/cv-copilot.png",
+} as const;
 
 export const EXPERIENCE = [
   {
