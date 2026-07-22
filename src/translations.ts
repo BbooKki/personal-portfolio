@@ -48,6 +48,12 @@ export const translations = {
           impact: "Implemented complex financial data modeling and real-time order tracking."
         }
       ],
+      aiDemo: {
+        category: "Private On-Device AI",
+        description: "Ask technical questions about my experience, projects, and architecture decisions through a focused portfolio assistant running locally in your browser.",
+        impact: "Runs Gemma 4 E2B through LiteRT-LM, WebGPU, and a dedicated Web Worker so prompts stay on the visitor's device.",
+        visit: "Start Private Chat"
+      },
       cvCopilot: {
         category: "AI / Developer Tools",
         description: "A privacy-conscious CV editor that compares real experience with a target role, proposes reviewable improvements, and exports polished PDFs.",
@@ -147,6 +153,12 @@ export const translations = {
           impact: "복잡한 금융 데이터 모델링 및 실시간 주문 추적 기능을 구현했습니다."
         }
       ],
+      aiDemo: {
+        category: "프라이빗 온디바이스 AI",
+        description: "브라우저에서 로컬로 실행되는 포트폴리오 어시스턴트를 통해 경력, 프로젝트 및 아키텍처 결정에 관한 기술 질문을 할 수 있습니다.",
+        impact: "Gemma 4 E2B를 LiteRT-LM, WebGPU 및 전용 Web Worker로 실행하여 방문자의 프롬프트가 기기 밖으로 나가지 않도록 합니다.",
+        visit: "프라이빗 채팅 시작"
+      },
       cvCopilot: {
         category: "AI / 개발자 도구",
         description: "실제 경력을 목표 직무와 비교하고, 검토 가능한 개선안을 제안하며, 완성도 높은 PDF를 내보내는 개인정보 보호 중심 CV 편집기입니다.",

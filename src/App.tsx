@@ -7,6 +7,7 @@ import { useState, useEffect, type FormEvent } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { CV_COPILOT_DEMO, ICONS, PROJECTS, EXPERIENCE, SKILLS } from "./constants";
 import { Section, Card, Badge, Button } from "./components/UI";
+import {ProjectAccordion, type PortfolioDemo} from "./components/ProjectAccordion";
 import { translations, Language } from "./translations";
 
 export default function App() {
@@ -16,10 +17,50 @@ export default function App() {
   const [lang, setLang] = useState<Language>("en");
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [activeProject, setActiveProject] = useState("flowshop");
 
   const t = translations[lang];
   const cvDownloadHref = `${import.meta.env.BASE_URL}${lang === "en" ? "cv-en.pdf" : "cv-ko.pdf"}`;
   const cvDownloadName = lang === "en" ? "Dylan-Islom-CV-English.pdf" : "Dylan-Islom-CV-Korean.pdf";
+  const portfolioDemos: PortfolioDemo[] = [
+    ...PROJECTS.map((project, index) => ({
+      id: project.title.toLowerCase().replaceAll(" ", "-"),
+      number: project.demoNumber,
+      title: project.title,
+      category: t.projects.items[index]?.category ?? project.category,
+      description: t.projects.items[index]?.description ?? project.description,
+      impact: t.projects.items[index]?.impact ?? project.impact,
+      stack: project.stack,
+      href: project.link,
+      image: project.image,
+      actionLabel: t.projects.visit,
+    })),
+    {
+      id: "ask-dylan-ai",
+      number: "03",
+      title: "Ask Dylan’s AI",
+      category: t.projects.aiDemo.category,
+      description: t.projects.aiDemo.description,
+      impact: t.projects.aiDemo.impact,
+      stack: ["Gemma 4 E2B", "LiteRT-LM", "WebGPU", "Web Worker"],
+      href: "/lab/gemma",
+      actionLabel: t.projects.aiDemo.visit,
+    },
+    {
+      id: "cv-copilot",
+      number: CV_COPILOT_DEMO.demoNumber,
+      title: CV_COPILOT_DEMO.title,
+      category: t.projects.cvCopilot.category,
+      description: t.projects.cvCopilot.description,
+      impact: t.projects.cvCopilot.impact,
+      stack: CV_COPILOT_DEMO.stack,
+      href: CV_COPILOT_DEMO.link,
+      image: CV_COPILOT_DEMO.image,
+      source: CV_COPILOT_DEMO.source,
+      actionLabel: t.projects.cvCopilot.visit,
+      sourceLabel: t.projects.cvCopilot.source,
+    },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -345,150 +386,7 @@ export default function App() {
 
         {/* Projects Section */}
         <Section id="projects" title={t.projects.title} subtitle={t.projects.subtitle}>
-          <div className="grid md:grid-cols-2 gap-10">
-            {PROJECTS.map((project, idx) => (
-              <motion.div
-                key={project.title}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="group relative"
-              >
-                <div className="h-full flex flex-col glass rounded-3xl overflow-hidden border shadow-sm hover:shadow-2xl transition-all duration-500">
-                  <div className="h-64 bg-neutral-800 overflow-hidden relative">
-                    <div className="absolute top-4 right-4 z-20 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/70 px-3 py-1.5 font-mono text-[9px] font-bold tracking-widest text-white backdrop-blur-md">
-                      <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" aria-hidden="true" />
-                      DEMO {project.demoNumber} · LIVE
-                    </div>
-                    <div className="absolute inset-x-0 bottom-0 p-6 z-10 bg-gradient-to-t from-black/80 to-transparent">
-                      <Badge className="bg-white/20 text-white border-white/30 mb-2">
-                        {t.projects.items[idx]?.category || project.category}
-                      </Badge>
-                      <h3 className="text-2xl font-bold text-white tracking-tight">{project.title}</h3>
-                    </div>
-                    <img 
-                      src={project.image || `https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800&id=${idx}`} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                      alt={project.title} 
-                    />
-                  </div>
-                  <div className="p-8 flex-1 flex flex-col">
-                    <p className="text-neutral-400 mb-6 line-clamp-3">
-                      {t.projects.items[idx]?.description || project.description}
-                    </p>
-                    {(t.projects.items[idx]?.impact || project.impact) && (
-                      <div className="mb-8 p-5 bg-white/[0.03] rounded-sm relative overflow-hidden group/outcome border border-white/5">
-                        <div className="absolute inset-0 grid-bg-fine opacity-10" />
-                        <div className="flex items-center gap-2 mb-3 font-mono text-[10px] font-bold text-white uppercase tracking-widest relative z-10">
-                          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                          System_Output // Impact
-                        </div>
-                        <p className="text-sm font-mono text-neutral-400 leading-relaxed italic relative z-10">
-                          "{t.projects.items[idx]?.impact || project.impact}"
-                        </p>
-                      </div>
-                    )}
-                    <div className="flex flex-wrap gap-2 mb-8">
-                      {project.stack.map(tag => (
-                        <span key={tag} className="text-[10px] font-bold uppercase tracking-widest text-neutral-500">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="mt-auto flex items-center justify-between">
-                      {project.link ? (
-                        <a 
-                          href={project.link} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 text-white font-mono font-bold hover:gap-3 transition-all underline decoration-white/20 underline-offset-4"
-                        >
-                          {t.projects.visit} <ICONS.External size={16} />
-                        </a>
-                      ) : (
-                        <span className="text-neutral-500 text-sm font-mono italic">{t.projects.confidential}</span>
-                      )}
-                      
-                      <button className="p-2 rounded-full hover:bg-white/5 transition-colors">
-                        <ICONS.Arrow />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <a href="/lab/gemma" className="group relative mt-8 block overflow-hidden border border-white/30 bg-gradient-to-br from-white/[0.12] via-white/[0.04] to-transparent p-6 shadow-[0_0_45px_rgba(255,255,255,0.06)] transition hover:border-white/70 hover:shadow-[0_0_55px_rgba(255,255,255,0.12)] md:p-10">
-            <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-white/[0.08] blur-3xl transition group-hover:bg-white/[0.14]" />
-            <div className="relative grid gap-8 lg:grid-cols-[1fr_280px] lg:items-center">
-              <div>
-                <div className="flex flex-wrap items-center gap-3">
-                  <Badge className="border-white/40 bg-white text-black">DEMO 03 · TRY THE AI ASSISTANT</Badge>
-                  <span className="flex items-center gap-2 font-mono text-[10px] font-bold tracking-[.16em] text-emerald-300"><span className="h-2 w-2 animate-pulse rounded-full bg-emerald-300" /> RUNS LOCALLY</span>
-                </div>
-                <div className="mt-5 flex items-start gap-4">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center border border-white/30 bg-black/40"><ICONS.AI size={26} /></div>
-                  <div>
-                    <h3 className="text-3xl font-black tracking-tight text-white md:text-4xl normal-case">Ask Dylan’s AI</h3>
-                    <p className="mt-3 max-w-2xl text-sm leading-6 text-neutral-300 md:text-base">Have a technical question about Dylan’s experience, projects, or architecture decisions? Ask the private, on-device assistant powered by Gemma.</p>
-                  </div>
-                </div>
-                <div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] font-bold tracking-[.14em] text-neutral-500"><span>PRIVATE</span><span>WEBGPU</span><span>EN / KO</span><span>NO SIGN-IN</span></div>
-              </div>
-              <div className="border border-white/15 bg-black/50 p-5 backdrop-blur-sm">
-                <p className="font-mono text-[9px] font-bold tracking-[.16em] text-neutral-600">TRY ASKING</p>
-                <p className="mt-3 text-sm leading-6 text-neutral-200">“What has Dylan built with Flutter?”</p>
-                <span className="mt-5 flex items-center gap-2 font-mono text-xs font-bold text-white">START A PRIVATE CHAT <ICONS.Arrow size={16} className="transition-transform group-hover:translate-x-1" /></span>
-              </div>
-            </div>
-          </a>
-
-          <article className="group relative mt-8 overflow-hidden border border-white/20 bg-white/[0.03] transition hover:border-white/60 lg:grid lg:grid-cols-[1.05fr_0.95fr]">
-            <a
-              href={CV_COPILOT_DEMO.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative block min-h-72 overflow-hidden border-b border-white/10 bg-neutral-900 lg:min-h-full lg:border-b-0 lg:border-r"
-              aria-label={`${t.projects.cvCopilot.visit}: ${CV_COPILOT_DEMO.title}`}
-            >
-              <img
-                src={CV_COPILOT_DEMO.image}
-                alt="CV Copilot landing page with a monochrome CV tailoring workflow"
-                className="absolute inset-0 h-full w-full object-cover object-top transition duration-700 group-hover:scale-[1.02]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-              <span className="absolute left-5 top-5 border border-white/30 bg-black/80 px-3 py-2 font-mono text-[10px] font-bold tracking-[.16em] text-white backdrop-blur">
-                DEMO {CV_COPILOT_DEMO.demoNumber} · LIVE
-              </span>
-            </a>
-
-            <div className="flex flex-col p-7 md:p-10">
-              <Badge className="mb-4 w-fit border-white/20 bg-white/5 text-neutral-300">{t.projects.cvCopilot.category}</Badge>
-              <h3 className="text-3xl font-black tracking-tight text-white normal-case md:text-4xl">{CV_COPILOT_DEMO.title}</h3>
-              <p className="mt-4 text-sm leading-6 text-neutral-300 md:text-base">{t.projects.cvCopilot.description}</p>
-              <div className="relative mt-6 overflow-hidden border border-white/10 bg-black/40 p-5">
-                <div className="absolute inset-0 grid-bg-fine opacity-10" />
-                <p className="relative font-mono text-[10px] font-bold tracking-[.16em] text-white">SYSTEM_OUTPUT // ENGINEERING</p>
-                <p className="relative mt-3 text-sm leading-6 text-neutral-400">{t.projects.cvCopilot.impact}</p>
-              </div>
-              <div className="mt-6 flex flex-wrap gap-x-4 gap-y-2">
-                {CV_COPILOT_DEMO.stack.map((technology) => (
-                  <span key={technology} className="font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-500">{technology}</span>
-                ))}
-              </div>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <a href={CV_COPILOT_DEMO.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-white px-5 py-3 font-mono text-xs font-bold text-black transition hover:bg-neutral-200">
-                  {t.projects.cvCopilot.visit} <ICONS.External size={15} />
-                </a>
-                <a href={CV_COPILOT_DEMO.source} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border border-white/20 px-5 py-3 font-mono text-xs font-bold text-white transition hover:border-white/60">
-                  {t.projects.cvCopilot.source} <ICONS.GitHub size={15} />
-                </a>
-              </div>
-            </div>
-          </article>
-          
+          <ProjectAccordion demos={portfolioDemos} activeId={activeProject} onSelect={setActiveProject} />
           <div className="mt-20 flex flex-col items-center">
             <Card className="w-full md:w-fit px-10 py-8 text-center flex flex-col md:flex-row items-center gap-8 border-dashed border-2 border-white/10 bg-white/[0.02]">
               <div className="flex flex-col items-center">
