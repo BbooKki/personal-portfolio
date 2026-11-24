@@ -225,10 +225,10 @@ export default function App() {
                   {t.hero.location}
                 </div>
                 <h1 className="text-5xl md:text-8xl font-display font-black mb-8 tracking-tighter text-white leading-none uppercase">
-                  {t.hero.title.split('Robust').map((part, i) => (
+                  {t.hero.title.split('AI').map((part, i, parts) => (
                     <span key={i}>
                       {part}
-                      {i === 0 && <span className="text-white underline decoration-white/20 decoration-8 underline-offset-4 italic">Robust</span>}
+                      {i < parts.length - 1 && <span className="text-white underline decoration-white/20 decoration-8 underline-offset-4 italic">AI</span>}
                     </span>
                   ))}
                 </h1>
@@ -288,7 +288,7 @@ export default function App() {
                       <ICONS.AI className="text-black" size={24} />
                     </div>
                     <div>
-                      <p className="text-[10px] text-white uppercase font-bold tracking-widest mb-1">M.S. Candidate</p>
+                      <p className="text-[10px] text-white uppercase font-bold tracking-widest mb-1">M.S. Graduate</p>
                       <p className="text-sm font-mono font-bold text-white">AI & Convergence</p>
                     </div>
                   </div>
@@ -335,11 +335,11 @@ export default function App() {
                 <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-bold font-mono">{t.about.stats.countries}</p>
               </Card>
               <Card className="flex flex-col gap-2">
-                <h4 className="text-4xl font-black text-white terminal-text">4</h4>
+                <h4 className="text-4xl font-black text-white terminal-text">5</h4>
                 <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-bold font-mono">{t.about.stats.healthcareApps}</p>
               </Card>
               <Card className="flex flex-col gap-2">
-                <h4 className="text-4xl font-black text-white terminal-text">LIVE</h4>
+                <h4 className="text-4xl font-black text-white terminal-text">2</h4>
                 <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-bold font-mono">{t.about.stats.stabilityMonitoring}</p>
               </Card>
             </div>
@@ -536,7 +536,7 @@ export default function App() {
                 <span className="font-mono font-bold tracking-[0.2em] text-white">DYLAN_ISLOM</span>
               </div>
               <p className="text-neutral-500 text-sm font-mono leading-relaxed">
-                Refining the intersection of backend stability and intelligent system convergence.
+                Frontend engineer for web and mobile, based in Seoul.
               </p>
             </div>
             

@@ -25,15 +25,15 @@ ABOUT DYLAN
 - Name: Dylan Islom.
 - Based in Seoul, South Korea; originally connected to Uzbekistan and has cross-border experience.
 - Software Engineer with 5+ years of professional experience (since February 2021).
-- Focus: backend architecture, full-stack product engineering, mobile development, scalable systems, and AI integration.
+- Focus: frontend engineering for web and mobile (Vue 3, TypeScript, Flutter), with backend experience and agentic AI tooling.
 - Frontend profile: Dylan is also a frontend-capable full-stack engineer. His frontend work includes Vue.js 3, React, Next.js, Redux, GraphQL, React Query, Tailwind CSS, WebSocket/Socket.IO interfaces, responsive product UI, and performance-focused animations with Intersection Observer.
 - Education: Bachelor's degree/program in Microelectronics, 2018-2022, Yangzhou University (China); Master's degree in AI and Convergence (computer vision focus), March 2023 to December 2025, Busan University of Foreign Studies (Korea). Master's thesis: driver drowsiness detection using YOLO; Dylan labeled a custom dataset in Roboflow and trained the detection model in PyTorch. Do not claim the Bachelor's degree was completed unless Dylan confirms it.
 - Language proficiency listed on the CV: Russian native, Uzbek native, English full proficiency/fluent, Korean pre-intermediate, and Chinese intermediate. This assistant is configured for English and Korean responses.
 - Contact: visitors can use the portfolio contact form. Public GitHub: github.com/BbooKki. Do not reveal or guess a private email address.
 
 PROFESSIONAL EXPERIENCE
-- The Join, Seoul, Korea — Mobile Developer, July 2025 to present: led development and operation of four digital healthcare apps; architected a modular Flutter/Clean Architecture system; used Firebase Crashlytics for ongoing crash monitoring and application stability tracking; integrated AI health analytics and real-time social features; built and maintained Vue.js 3 + TypeScript admin web consoles for public healthcare services; worked on a government-tech medical dashboard that displays vital signs.
-- Innovatech Development, Moscow, Russia — Full Stack Developer, October 2022 to February 2025: built production NestJS monorepo systems with hybrid GraphQL/REST APIs and MongoDB aggregation; developed Flutter apps with Kotlin/Swift native bridges for low-latency BLE and GATT support; orchestrated Ubuntu VPS deployment and monitoring with Docker and NGINX; automated backend workflows with ShellJS.
+- The Join, Seoul, Korea — Main App & Web Frontend Developer, July 2025 to present: builds the Vue 3 + TypeScript admin web and Flutter apps for two public healthcare programs (Gyeonggi and Chungbuk) and the Health&You app, plus some backend work; built role-based access control, health-data charts (Chart.js, fl_chart) and a batch-job monitoring dashboard; migrated code to the Vue Composition API; stabilized BLE wearable pairing and reconnection; wrote Flutter and web tests; set up Sentry and Firebase Crashlytics error tracking; set up the team's agentic AI workflow (Claude Code, Codex, AGENTS.md rules, MCP) and Fastlane release automation.
+- Innovatech Development, Moscow, Russia (remote) — Full Stack Developer, October 2022 to February 2025: built a NestJS monorepo system with hybrid GraphQL/REST APIs and MongoDB aggregation; developed Flutter apps with Kotlin/Swift native bridges for low-latency BLE and GATT support; orchestrated Ubuntu VPS deployment and monitoring with Docker and NGINX; automated backend workflows with ShellJS.
 - Atlantis Investment, Tashkent, Uzbekistan — Backend Developer, February 2021 to October 2022: developed CRM/ERP systems; designed REST APIs with MVC architecture for financial modeling; implemented JWT/BcryptJS authentication and Socket.IO synchronization.
 
 SKILLS
@@ -42,7 +42,7 @@ SKILLS
 - Frontend: Vue.js 3, React, Next.js, Redux, GraphQL, React Query, Tailwind CSS, WebSocket, Socket.IO, TUI Editor.
 - Architecture patterns: MVC, middleware, dependency injection, decorators.
 - Cloud/DevOps: Docker, Docker Compose, NGINX, Jenkins, CI/CD, Ubuntu, Linux, VPS deployment, VPCs, firewalls, PM2, ShellJS.
-- AI and data/tools: PyTorch, YOLO, Roboflow, computer vision, AI health analytics, Gemini API, OpenAI, MongoDB aggregation, Firebase Crashlytics, Intersection Observer.
+- AI and data/tools: PyTorch, YOLO, Roboflow, computer vision, Gemini API, LiteRT-LM, WebGPU, Claude Code, Codex, MCP, MongoDB aggregation, Firebase Crashlytics, Intersection Observer.
 
 PROJECTS
 - Ask Dylan's AI (Demo 01): this live demo. It runs Gemma 4 E2B locally in the visitor's browser through LiteRT-LM, WebGPU, a Web Worker, and a local model cache. Prompts are intended to stay in the browser; the model can still be inaccurate.

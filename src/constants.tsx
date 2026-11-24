@@ -54,21 +54,21 @@ export const EXPERIENCE = [
   {
     company: "The Join",
     location: "Seoul, Korea",
-    role: "Mobile Developer",
+    role: "Main App & Web Frontend Developer",
     period: "2025.07 - Present",
     points: [
-      "Architected a modular Flutter (Clean Architecture) system for a digital healthcare ecosystem.",
-      "Integrated AI health analytics and real-time social features.",
-      "Built and maintained Vue.js 3 + TypeScript admin web consoles for public healthcare services."
+      "Build the Vue 3 + TypeScript admin web and Flutter apps for two public healthcare programs and the Health&You app.",
+      "Built role-based access control, health-data charts and a batch-job monitoring dashboard.",
+      "Stabilized BLE wearable pairing and wrote app and web tests; set up Sentry and Crashlytics error tracking."
     ]
   },
   {
     company: "Innovatech Development",
-    location: "Moscow, Russia",
+    location: "Moscow, Russia (remote)",
     role: "Full Stack Developer",
     period: "2022.10 - 2025.02",
     points: [
-      "Engineered production-grade NestJS monorepo systems with hybrid GraphQL/REST APIs.",
+      "Built a NestJS monorepo system with GraphQL and REST APIs.",
       "Developed cross-platform Flutter apps with Native Bridges for BLE communication.",
       "Automated backend workflows on Ubuntu VPS using Docker and NGINX."
     ]
@@ -80,8 +80,8 @@ export const EXPERIENCE = [
     period: "2021.02 - 2022.10",
     points: [
       "Developed CRM/ERP systems for internal financial operations.",
-      "Designed scalable RESTful APIs using MVC architecture for financial modeling.",
-      "Implemented robust JWT/BcryptJS authentication and Socket.IO synchronization."
+      "Designed REST APIs with MVC for financial data modeling.",
+      "Implemented JWT/BcryptJS authentication and Socket.IO sync."
     ]
   }
 ];
@@ -110,6 +110,6 @@ export const SKILLS = [
   {
     category: "AI & Tools",
     icon: "AI",
-    tags: ["AI Health Analytics", "Gemini API", "OpenAI", "PyTorch", "YOLO", "MongoDB Aggregation", "Socket.IO"]
+    tags: ["PyTorch", "YOLO", "Roboflow", "Gemini API", "LiteRT-LM / WebGPU", "Claude Code", "Codex"]
   }
 ];
