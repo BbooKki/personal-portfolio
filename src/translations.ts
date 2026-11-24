@@ -16,12 +16,12 @@ export const translations = {
     },
     about: {
       title: "Professional Summary",
-      p1: "I am a Software Engineer with 4+ years of cross-border experience. My path has taken me from building financial CRM systems to architecting complex healthcare ecosystems in the heart of Seoul.",
-      p2: "As a Master's candidate in AI & Convergence, I bridge the gap between traditional backend reliability and modern intelligent systems. I don't just write code; I design systems that scale and solve real-world problems.",
+      p1: "I am a Software Engineer with 5+ years of cross-border experience. My path has taken me from building financial CRM systems to architecting complex healthcare ecosystems in the heart of Seoul.",
+      p2: "With a Master's in AI & Convergence (computer vision focus), I bridge the gap between traditional backend reliability and modern intelligent systems. I don't just write code; I design systems that scale and solve real-world problems.",
       stats: {
         experience: "Years Experience",
-        products: "Products Shipped",
-        users: "Total Users Managed",
+        countries: "Countries Worked In",
+        healthcareApps: "Healthcare Apps Shipped",
         stabilityMonitoring: "Stability Monitoring"
       }
     },
@@ -40,12 +40,7 @@ export const translations = {
         {
           category: "E-Commerce",
           description: "A feature-rich e-commerce platform for limited clothing, featuring real-time chat and advanced filtering.",
-          impact: "Built with MVR architecture, delivering <100ms response times for 20k+ SKUs."
-        },
-        {
-          category: "E-Commerce / MVC",
-          description: "Multi-vendor pet marketplace with robust order management and administrative dashboard.",
-          impact: "Implemented complex financial data modeling and real-time order tracking."
+          impact: "NestJS + GraphQL API with JWT authentication, products, comments, likes and follows, powering a Next.js storefront with signup, My Page and admin views."
         }
       ],
       aiDemo: {
@@ -58,7 +53,7 @@ export const translations = {
         category: "AI / Developer Tools",
         description: "A privacy-conscious CV editor that compares real experience with a target role, proposes reviewable improvements, and exports polished PDFs.",
         impact: "Built truthful, reversible AI workflows with local Gemma inference, guarded job-page extraction, four shared-schema templates, and optional cloud persistence.",
-        visit: "Try Demo 04",
+        visit: "Try Demo 03",
         source: "View Source"
       }
     },
@@ -68,9 +63,9 @@ export const translations = {
         {
           role: "Mobile Developer",
           points: [
-            "Architected modular Flutter system with 15+ modules for a healthcare ecosystem.",
+            "Architected a modular Flutter (Clean Architecture) system for a digital healthcare ecosystem.",
             "Integrated AI health analytics and real-time social features.",
-            "Maintained high-traffic Vue.js 3 site for 230k users."
+            "Built and maintained Vue.js 3 + TypeScript admin web consoles for public healthcare services."
           ]
         },
         {
@@ -84,7 +79,7 @@ export const translations = {
         {
           role: "Backend Developer",
           points: [
-            "Developed high-performance CRM/ERP systems increasing operational efficiency by 30%.",
+            "Developed CRM/ERP systems for internal financial operations.",
             "Designed scalable RESTful APIs using MVC architecture for financial modeling.",
             "Implemented robust JWT/BcryptJS authentication and Socket.IO synchronization."
           ]
@@ -121,12 +116,12 @@ export const translations = {
     },
     about: {
       title: "전문가 요약",
-      p1: "저는 4년 이상의 글로벌 경험을 가진 소프트웨어 엔지니어입니다. 금융 CRM 시스템 구축부터 서울 중심부의 복잡한 의료 생태계 아키텍처 설계까지 다양한 프로젝트를 수행해 왔습니다.",
-      p2: "AI 및 융합 전공 석사 과정생으로서, 전통적인 백엔드의 안정성과 현대적인 지능형 시스템 사이의 가교 역할을 합니다. 단순히 코드를 작성하는 것이 아니라, 확장 가능하고 실제 문제를 해결하는 시스템을 설계합니다.",
+      p1: "저는 5년 이상의 글로벌 경험을 가진 소프트웨어 엔지니어입니다. 금융 CRM 시스템 구축부터 서울 중심부의 복잡한 의료 생태계 아키텍처 설계까지 다양한 프로젝트를 수행해 왔습니다.",
+      p2: "AI융합 석사(컴퓨터 비전 전공)로서, 전통적인 백엔드의 안정성과 현대적인 지능형 시스템 사이의 가교 역할을 합니다. 단순히 코드를 작성하는 것이 아니라, 확장 가능하고 실제 문제를 해결하는 시스템을 설계합니다.",
       stats: {
         experience: "경력 연수",
-        products: "출시 제품",
-        users: "관리 유저 수",
+        countries: "근무 국가",
+        healthcareApps: "출시한 헬스케어 앱",
         stabilityMonitoring: "안정성 모니터링"
       }
     },
@@ -145,12 +140,7 @@ export const translations = {
         {
           category: "이커머스",
           description: "실시간 채팅 및 고급 필터링 기능을 갖춘 한정판 의류 이커머스 플랫폼입니다.",
-          impact: "MVR 아키텍처로 구축되어 2만 개 이상의 SKU에 대해 100ms 미만의 응답 시간을 제공합니다."
-        },
-        {
-          category: "이커머스 / MVC",
-          description: "강력한 주문 관리 및 관리자 대시보드를 갖춘 멀티 벤더 반려동물 마켓플레이스입니다.",
-          impact: "복잡한 금융 데이터 모델링 및 실시간 주문 추적 기능을 구현했습니다."
+          impact: "JWT 인증, 상품·댓글·좋아요·팔로우 기능을 갖춘 NestJS + GraphQL API와 회원가입, 마이페이지, 관리자 화면을 제공하는 Next.js 스토어프론트입니다."
         }
       ],
       aiDemo: {
@@ -163,7 +153,7 @@ export const translations = {
         category: "AI / 개발자 도구",
         description: "실제 경력을 목표 직무와 비교하고, 검토 가능한 개선안을 제안하며, 완성도 높은 PDF를 내보내는 개인정보 보호 중심 CV 편집기입니다.",
         impact: "로컬 Gemma 추론, 안전한 채용 공고 추출, 공통 스키마 기반 4개 템플릿, 선택적 클라우드 저장을 갖춘 진실하고 되돌릴 수 있는 AI 워크플로를 구축했습니다.",
-        visit: "데모 04 체험",
+        visit: "데모 03 체험",
         source: "소스 보기"
       }
     },
@@ -173,9 +163,9 @@ export const translations = {
         {
           role: "모바일 개발자",
           points: [
-            "의료 생태계를 위한 15개 이상의 모듈을 갖춘 모듈형 Flutter 시스템을 설계했습니다.",
+            "디지털 헬스케어 서비스를 위한 모듈형 Flutter(클린 아키텍처) 시스템을 설계했습니다.",
             "AI 건강 분석 및 실시간 소셜 기능을 통합했습니다.",
-            "23만 명의 사용자를 위한 트래픽이 높은 Vue.js 3 사이트를 유지보수했습니다."
+            "공공 헬스케어 서비스의 Vue.js 3 + TypeScript 관리자 웹을 개발하고 유지보수했습니다."
           ]
         },
         {
@@ -189,7 +179,7 @@ export const translations = {
         {
           role: "백엔드 개발자",
           points: [
-            "팀 운영 효율성을 30% 증가시킨 고성능 CRM/ERP 시스템을 개발했습니다.",
+            "사내 금융 업무를 위한 CRM/ERP 시스템을 개발했습니다.",
             "재무 데이터 모델링 및 분석을 위해 MVC 아키텍처를 사용한 확장 가능한 RESTful API를 설계했습니다.",
             "JWT 및 BcryptJS를 사용한 강력한 인증 프레임워크와 실시간 동기화를 위한 Socket.IO를 구현했습니다."
           ]

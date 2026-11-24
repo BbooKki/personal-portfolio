@@ -37,7 +37,7 @@ export default function App() {
     })),
     {
       id: "ask-dylan-ai",
-      number: "03",
+      number: "02",
       title: "Ask Dylan’s AI",
       category: t.projects.aiDemo.category,
       description: t.projects.aiDemo.description,
@@ -339,16 +339,16 @@ export default function App() {
             </div>
             <div className="grid grid-cols-2 gap-6">
               <Card className="flex flex-col gap-2">
-                <h4 className="text-4xl font-black text-white terminal-text">4+</h4>
+                <h4 className="text-4xl font-black text-white terminal-text">5+</h4>
                 <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-bold font-mono">{t.about.stats.experience}</p>
               </Card>
               <Card className="flex flex-col gap-2">
-                <h4 className="text-4xl font-black text-white terminal-text">10+</h4>
-                <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-bold font-mono">{t.about.stats.products}</p>
+                <h4 className="text-4xl font-black text-white terminal-text">3</h4>
+                <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-bold font-mono">{t.about.stats.countries}</p>
               </Card>
               <Card className="flex flex-col gap-2">
-                <h4 className="text-4xl font-black text-white terminal-text">230k</h4>
-                <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-bold font-mono">{t.about.stats.users}</p>
+                <h4 className="text-4xl font-black text-white terminal-text">4</h4>
+                <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-bold font-mono">{t.about.stats.healthcareApps}</p>
               </Card>
               <Card className="flex flex-col gap-2">
                 <h4 className="text-4xl font-black text-white terminal-text">LIVE</h4>

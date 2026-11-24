@@ -48,27 +48,16 @@ export const PROJECTS = [
     category: "E-Commerce",
     description: "A feature-rich e-commerce platform for limited clothing, featuring real-time chat and advanced filtering.",
     stack: ["NestJS", "GraphQL", "MongoDB", "Next.js", "WebSocket"],
-    impact: "Built with MVR architecture, delivering <100ms response times for 20k+ SKUs.",
+    impact: "NestJS + GraphQL API with JWT authentication, products, comments, likes and follows, powering a Next.js storefront with signup, My Page and admin views.",
     link: "https://flowshop-uz.vercel.app",
     image: "/flowshop.png",
-    isCaseStudy: true
-  },
-  {
-    demoNumber: "02",
-    title: "Our Petstore",
-    category: "E-Commerce / MVC",
-    description: "Multi-vendor pet marketplace with robust order management and administrative dashboard.",
-    stack: ["Express.js", "MongoDB", "Redux", "Socket.io", "Docker"],
-    impact: "Implemented complex financial data modeling and real-time order tracking.",
-    link: "https://petstore-frontend-zeta.vercel.app",
-    image: "/petstore.png",
     isCaseStudy: true
   }
 ];
 
 export const CV_COPILOT_DEMO = {
   title: "CV Copilot",
-  demoNumber: "04",
+  demoNumber: "03",
   stack: ["React", "TypeScript", "Gemma", "WebGPU", "Supabase"],
   link: "https://cv-copilot-lovat.vercel.app",
   source: "https://github.com/BbooKki/cv-copilot",
@@ -82,9 +71,9 @@ export const EXPERIENCE = [
     role: "Mobile Developer",
     period: "2025.07 - Present",
     points: [
-      "Architected modular Flutter system with 15+ modules for a healthcare ecosystem.",
+      "Architected a modular Flutter (Clean Architecture) system for a digital healthcare ecosystem.",
       "Integrated AI health analytics and real-time social features.",
-      "Maintained high-traffic Vue.js 3 site for 230k users."
+      "Built and maintained Vue.js 3 + TypeScript admin web consoles for public healthcare services."
     ]
   },
   {
@@ -104,7 +93,7 @@ export const EXPERIENCE = [
     role: "Backend Developer",
     period: "2021.02 - 2022.10",
     points: [
-      "Developed high-performance CRM/ERP systems increasing operational efficiency by 30%.",
+      "Developed CRM/ERP systems for internal financial operations.",
       "Designed scalable RESTful APIs using MVC architecture for financial modeling.",
       "Implemented robust JWT/BcryptJS authentication and Socket.IO synchronization."
     ]
@@ -115,7 +104,7 @@ export const SKILLS = [
   {
     category: "Backend",
     icon: "Backend",
-    tags: ["Node.js", "NestJS", "Express", "TypeScript", "Java", "Spring Boot", "Python"]
+    tags: ["Node.js", "NestJS", "Express", "TypeScript", "Python"]
   },
   {
     category: "Mobile",
@@ -135,6 +124,6 @@ export const SKILLS = [
   {
     category: "AI & Tools",
     icon: "AI",
-    tags: ["AI Health Analytics", "Gemini API", "OpenAI", "MongoDB Aggregation", "Socket.IO"]
+    tags: ["AI Health Analytics", "Gemini API", "OpenAI", "PyTorch", "YOLO", "MongoDB Aggregation", "Socket.IO"]
   }
 ];
