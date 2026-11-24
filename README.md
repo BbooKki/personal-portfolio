@@ -1,10 +1,10 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
-
 # Dylan Islom — Personal Portfolio
 
-A cyberpunk-themed personal portfolio for **Dylan (Islom)**, a Full-Stack Software Engineer specializing in backend systems, mobile development, and AI integration, based in Seoul.
+Live at **[itsdylan.online](https://itsdylan.online)**.
+
+A cyberpunk-themed personal portfolio for **Dylan (Islom)**, a full-stack engineer in Seoul working across web, mobile and AI.
+
+It includes **[Ask Dylan's AI](https://itsdylan.online/lab/gemma)**, a portfolio assistant that runs Gemma locally in the visitor's browser (LiteRT-LM, WebGPU, Web Worker), so prompts never leave the device.
 
 Built with **React**, **TypeScript**, **Tailwind CSS v4**, and **Vite**, deployed on **Vercel**.
 
