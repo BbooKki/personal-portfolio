@@ -17,7 +17,7 @@ export const translations = {
     about: {
       title: "Professional Summary",
       p1: "I am a software engineer with about five years of experience at companies in Uzbekistan, Russia and Korea. I started with backend CRM systems and now work as the main app and web frontend developer at a healthcare software company in Seoul.",
-      p2: "I hold a Master's in AI & Convergence with a computer vision focus; my thesis detected driver drowsiness with YOLO. Today I build Vue 3, TypeScript and Flutter apps, and I set up the agentic AI workflow my team uses.",
+      p2: "I hold a Master's in AI & Convergence with a computer vision focus; my thesis detected driver drowsiness with YOLO. Today I build Vue 3, TypeScript and Flutter apps, and I use agentic AI tools daily, with MCP and agent configurations I set up in my team's repositories.",
       stats: {
         experience: "Years Experience",
         countries: "Countries (employers)",
@@ -110,7 +110,7 @@ export const translations = {
     about: {
       title: "소개",
       p1: "우즈베키스탄, 러시아, 한국 회사에서 약 5년간 일한 소프트웨어 엔지니어입니다. 백엔드 CRM 개발로 시작해, 지금은 서울의 헬스케어 소프트웨어 회사에서 앱·웹 프론트엔드를 맡고 있습니다.",
-      p2: "AI융합 석사(컴퓨터 비전 전공)를 마쳤고, 학위논문에서 YOLO로 운전자 졸음을 감지했습니다. 현재 Vue 3, TypeScript, Flutter로 서비스를 개발하며, 팀이 함께 쓰는 에이전틱 AI 개발 환경을 정비하고 있습니다.",
+      p2: "AI융합 석사(컴퓨터 비전 전공)를 마쳤고, 학위논문에서 YOLO로 운전자 졸음을 감지했습니다. 현재 Vue 3, TypeScript, Flutter로 서비스를 개발하며, 에이전틱 AI 도구를 매일 활용하며 팀 저장소의 MCP·에이전트 설정을 구성해 왔습니다.",
       stats: {
         experience: "경력 연수",
         countries: "근무 회사 국가",
