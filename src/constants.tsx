@@ -41,23 +41,9 @@ export const ICONS = {
   Calendar
 };
 
-export const PROJECTS = [
-  {
-    demoNumber: "01",
-    title: "Flowshop",
-    category: "E-Commerce",
-    description: "A feature-rich e-commerce platform for limited clothing, featuring real-time chat and advanced filtering.",
-    stack: ["NestJS", "GraphQL", "MongoDB", "Next.js", "WebSocket"],
-    impact: "NestJS + GraphQL API with JWT authentication, products, comments, likes and follows, powering a Next.js storefront with signup, My Page and admin views.",
-    link: "https://flowshop-uz.vercel.app",
-    image: "/flowshop.png",
-    isCaseStudy: true
-  }
-];
-
 export const CV_COPILOT_DEMO = {
   title: "CV Copilot",
-  demoNumber: "03",
+  demoNumber: "02",
   stack: ["React", "TypeScript", "Gemma", "WebGPU", "Supabase"],
   link: "https://cv-copilot-lovat.vercel.app",
   source: "https://github.com/BbooKki/cv-copilot",

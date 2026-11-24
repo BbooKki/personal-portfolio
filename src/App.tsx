@@ -5,7 +5,7 @@
 
 import { useState, useEffect, type FormEvent } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { CV_COPILOT_DEMO, ICONS, PROJECTS, EXPERIENCE, SKILLS } from "./constants";
+import { CV_COPILOT_DEMO, ICONS, EXPERIENCE, SKILLS } from "./constants";
 import { Section, Card, Badge, Button } from "./components/UI";
 import {ProjectAccordion, type PortfolioDemo} from "./components/ProjectAccordion";
 import { translations, Language } from "./translations";
@@ -17,27 +17,15 @@ export default function App() {
   const [lang, setLang] = useState<Language>("en");
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
-  const [activeProject, setActiveProject] = useState("flowshop");
+  const [activeProject, setActiveProject] = useState("ask-dylan-ai");
 
   const t = translations[lang];
   const cvDownloadHref = `${import.meta.env.BASE_URL}${lang === "en" ? "cv-en.pdf" : "cv-ko.pdf"}`;
   const cvDownloadName = lang === "en" ? "Dylan-Islom-CV-English.pdf" : "Dylan-Islom-CV-Korean.pdf";
   const portfolioDemos: PortfolioDemo[] = [
-    ...PROJECTS.map((project, index) => ({
-      id: project.title.toLowerCase().replaceAll(" ", "-"),
-      number: project.demoNumber,
-      title: project.title,
-      category: t.projects.items[index]?.category ?? project.category,
-      description: t.projects.items[index]?.description ?? project.description,
-      impact: t.projects.items[index]?.impact ?? project.impact,
-      stack: project.stack,
-      href: project.link,
-      image: project.image,
-      actionLabel: t.projects.visit,
-    })),
     {
       id: "ask-dylan-ai",
-      number: "02",
+      number: "01",
       title: "Ask Dylan’s AI",
       category: t.projects.aiDemo.category,
       description: t.projects.aiDemo.description,

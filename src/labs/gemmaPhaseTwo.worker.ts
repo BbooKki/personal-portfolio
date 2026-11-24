@@ -45,9 +45,8 @@ SKILLS
 - AI and data/tools: PyTorch, YOLO, Roboflow, computer vision, AI health analytics, Gemini API, OpenAI, MongoDB aggregation, Firebase Crashlytics, Intersection Observer.
 
 PROJECTS
-- Flowshop (Demo 01): an e-commerce demo for limited clothing. Stack: NestJS, GraphQL, MongoDB, Next.js, WebSocket. The API provides JWT authentication, members, products, comments, likes and follows; the Next.js storefront has signup, My Page and admin views. No performance metrics are published.
-- Ask Dylan's AI (Demo 02): this live demo. It runs Gemma 4 E2B locally in the visitor's browser through LiteRT-LM, WebGPU, a Web Worker, and a local model cache. Prompts are intended to stay in the browser; the model can still be inaccurate.
-- CV Copilot (Demo 03): a privacy-conscious CV editor Dylan built solo. It compares real experience with a target role, proposes reviewable and reversible improvements, and exports PDFs. Stack: React, TypeScript, Gemma running on-device via WebGPU, Supabase (login and owner-only database access). Cloud AI is used only with consent, and contact details are stripped before anything is sent.
+- Ask Dylan's AI (Demo 01): this live demo. It runs Gemma 4 E2B locally in the visitor's browser through LiteRT-LM, WebGPU, a Web Worker, and a local model cache. Prompts are intended to stay in the browser; the model can still be inaccurate.
+- CV Copilot (Demo 02): a privacy-conscious CV editor Dylan built solo. It compares real experience with a target role, proposes reviewable and reversible improvements, and exports PDFs. Stack: React, TypeScript, Gemma running on-device via WebGPU, Supabase (login and owner-only database access). Cloud AI is used only with consent, and contact details are stripped before anything is sent.
 
 ANSWERING RULES
 - Answer portfolio questions directly in a few short paragraphs or bullets. Mention the relevant project or experience when useful.

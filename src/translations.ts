@@ -36,13 +36,6 @@ export const translations = {
       confidential: "Confidential Project",
       githubTitle: "Active Open Source",
       githubDesc: "I regularly contribute to several internal toolings and maintain a presence on GitHub with various experimentation projects in AI and architecture.",
-      items: [
-        {
-          category: "E-Commerce",
-          description: "A feature-rich e-commerce platform for limited clothing, featuring real-time chat and advanced filtering.",
-          impact: "NestJS + GraphQL API with JWT authentication, products, comments, likes and follows, powering a Next.js storefront with signup, My Page and admin views."
-        }
-      ],
       aiDemo: {
         category: "Private On-Device AI",
         description: "Ask technical questions about my experience, projects, and architecture decisions through a focused portfolio assistant running locally in your browser.",
@@ -53,7 +46,7 @@ export const translations = {
         category: "AI / Developer Tools",
         description: "A privacy-conscious CV editor that compares real experience with a target role, proposes reviewable improvements, and exports polished PDFs.",
         impact: "Built truthful, reversible AI workflows with local Gemma inference, guarded job-page extraction, four shared-schema templates, and optional cloud persistence.",
-        visit: "Try Demo 03",
+        visit: "Try Demo 02",
         source: "View Source"
       }
     },
@@ -136,13 +129,6 @@ export const translations = {
       confidential: "기밀 프로젝트",
       githubTitle: "활발한 오픈 소스 활동",
       githubDesc: "여러 내부 툴링에 정기적으로 기여하고 있으며, AI 및 아키텍처 실험 프로젝트를 통해 GitHub에서 활발히 활동하고 있습니다.",
-      items: [
-        {
-          category: "이커머스",
-          description: "실시간 채팅 및 고급 필터링 기능을 갖춘 한정판 의류 이커머스 플랫폼입니다.",
-          impact: "JWT 인증, 상품·댓글·좋아요·팔로우 기능을 갖춘 NestJS + GraphQL API와 회원가입, 마이페이지, 관리자 화면을 제공하는 Next.js 스토어프론트입니다."
-        }
-      ],
       aiDemo: {
         category: "프라이빗 온디바이스 AI",
         description: "브라우저에서 로컬로 실행되는 포트폴리오 어시스턴트를 통해 경력, 프로젝트 및 아키텍처 결정에 관한 기술 질문을 할 수 있습니다.",
@@ -153,7 +139,7 @@ export const translations = {
         category: "AI / 개발자 도구",
         description: "실제 경력을 목표 직무와 비교하고, 검토 가능한 개선안을 제안하며, 완성도 높은 PDF를 내보내는 개인정보 보호 중심 CV 편집기입니다.",
         impact: "로컬 Gemma 추론, 안전한 채용 공고 추출, 공통 스키마 기반 4개 템플릿, 선택적 클라우드 저장을 갖춘 진실하고 되돌릴 수 있는 AI 워크플로를 구축했습니다.",
-        visit: "데모 03 체험",
+        visit: "데모 02 체험",
         source: "소스 보기"
       }
     },
